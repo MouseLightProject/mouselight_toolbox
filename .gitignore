@@ -1,0 +1,8 @@
+*.mat
+*.tif
+temp
+*.m~
+parfor_progress.txt
+*.stdout
+*.stderr
+*.stdouterr
