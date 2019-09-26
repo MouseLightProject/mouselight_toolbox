@@ -1,4 +1,4 @@
-function [xyzs, tree_id_from_node_id] = point_cloud_from_forest(forest_as_swc_arrays)
+function [xyz_from_tree_id, tree_id_from_node_id] = point_cloud_from_forest(forest_as_swc_arrays)
     % Extract the xyz coordinate of each node in a forst.
     % Also returns a look-up array that reveals the tree index for each point in the
     % cloud.
