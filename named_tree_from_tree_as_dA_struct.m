@@ -1,4 +1,12 @@
-function result = named_tree_from_tree_as_dA_struct(tree_as_dA_struct)
+function result = named_tree_from_tree_as_dA_struct(tree_as_dA_struct, name, color)
+    % Process args
+    if ~exist('color', 'var') || isempty(color) ,
+        color_map = distinct_hues_simple() ;
+        color_map_count = size(color_map,1) ;
+        color_index = floor(color_map_count * rand(1)) + 1 ;
+        color = color_map(color_index,:) ;
+    end
+    
     % Get data out of tree_as_struct
     dA_raw = tree_as_dA_struct.dA ;  % the directed adjacency matrix for the tree: dA_raw(i,j)==1 means an edge points from i to j
     xyz_raw = [tree_as_dA_struct.X,tree_as_dA_struct.Y,tree_as_dA_struct.Z] ;  % must be in um
@@ -37,8 +45,8 @@ function result = named_tree_from_tree_as_dA_struct(tree_as_dA_struct)
     if node_count>=1 ,
         parent(1) = -1 ;  % the swc convention is that the root parent is -1
     end
-    result = struct('name', '', ...
-                    'color', [1 1 1], ...
+    result = struct('name', name, ...
+                    'color', color, ...
                     'xyz', xyz, ...
                     'r', r, ...
                     'parent', parent, ...
