@@ -24,9 +24,9 @@ classdef progress_bar_object < handle
                 bar = repmat('*', [round(percent/2) 1]) ;
                 fprintf('[%-50s]: %4.1f%%', bar, percent_as_displayed) ;
                 self.did_print_at_least_one_line_ = true ;
-                if i==n ,
-                    fprintf('\n') ;
-                end
+            end
+            if i==n ,
+                fprintf('\n') ;
             end
             self.percent_as_displayed_last_ = percent_as_displayed ;
         end

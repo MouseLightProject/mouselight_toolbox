@@ -3,10 +3,11 @@ function save_swc_arrays(output_folder_path, ...
     
     % Generate colormap
     tree_count = length(forest_as_swc_arrays) ;
-    color_map = distinct_hues_simple() ;    
+    color_map = jet(256) ;    
     rep_count = ceil(tree_count/size(color_map,1)) ;
-    color_from_tree_index = repmat(color_map, [rep_count 1]) ;
-
+    raw_color_from_tree_index = repmat(color_map, [rep_count 1]) ;
+    color_from_tree_index = raw_color_from_tree_index(randperm(tree_count),:);
+    
     % Create the folder if it doesn't exist
     if tree_count>0 && ~exist(output_folder_path, 'file') ,
         mkdir(output_folder_path) ;

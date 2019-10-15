@@ -1,5 +1,5 @@
 function use_this_many_cores(core_count_desired)
-    poolobj = gcp('nocreate') ;  % If no pool, do not create new one.
+    poolobj = gcp('nocreate') ;  % Get the current pool, but don't create one if none exists
     if isempty(poolobj) ,                
         parpool_fancy(core_count_desired) ;        
     else

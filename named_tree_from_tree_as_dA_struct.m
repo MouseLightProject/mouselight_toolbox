@@ -1,7 +1,7 @@
 function result = named_tree_from_tree_as_dA_struct(tree_as_dA_struct, name, color)
     % Process args
     if ~exist('color', 'var') || isempty(color) ,
-        color_map = distinct_hues_simple() ;
+        color_map = jet(256) ;
         color_map_count = size(color_map,1) ;
         color_index = floor(color_map_count * rand(1)) + 1 ;
         color = color_map(color_index,:) ;
