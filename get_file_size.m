@@ -1,4 +1,4 @@
-function result = file_size(path)
+function result = get_file_size(path)
     d = dir(path) ;
     if isempty(d) ,
         error('File %s does not exist, seemingly', path) ;
