@@ -9,9 +9,9 @@ function find_and_batch(base_folder_path, file_name_predicate, batch_function, d
                               varargin{:}) ;
     job_statuses = bwait(job_ids) ;
     if all(job_statuses==1) ,
-        fprintf('All %d batch jobs completed without errors.\n', length(job_ids)) ;
+        fprintf('All %d %s() batch jobs completed without errors.\n', length(job_ids), func2str(batch_function)) ;
     else
-        fprintf('All %d batch jobs exited, but some had errors.\n', length(job_ids)) ;
+        fprintf('All %d %s() batch jobs exited, but some had errors.\n', length(job_ids), func2str(batch_function)) ;
         had_error = (job_statuses==-1) ;
         bad_job_ids = job_ids(had_error) ;
         fprintf('Job ids with errors: %s\n', mat2str(bad_job_ids)) ;
