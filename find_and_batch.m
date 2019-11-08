@@ -7,6 +7,7 @@ function find_and_batch(base_folder_path, is_batch_input_predicate, batch_functi
                               bsub_options, ...
                               zeros(1,0), ...
                               varargin{:}) ;
+    fprintf('Waiting for %d find_and_batch %s() jobs to finish...\n', length(job_ids), func2str(batch_function)) ;
     job_statuses = bwait(job_ids) ;
     if all(job_statuses==1) ,
         fprintf('All %d %s() batch jobs completed without errors.\n', length(job_ids), func2str(batch_function)) ;

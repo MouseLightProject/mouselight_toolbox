@@ -1,4 +1,4 @@
-function is_all_well = find_and_verify(root_folder_path, does_need_verification_predicate, verify_function, varargin)
+function find_and_verify(root_folder_path, does_need_verification_predicate, verify_function, varargin)
     tic_id = tic() ;
     verified_ok_count = 0 ;
     problem_paths = cell(1,0) ;
@@ -18,13 +18,18 @@ function is_all_well = find_and_verify(root_folder_path, does_need_verification_
                 func2str(verify_function)) ;
         fprintf('Hooray!\n') ;
         fprintf('%d files checked\n', verified_ok_count) ;
-        is_all_well = true ;
-    else        
-        for i = 1 : length(problem_paths) ,
-            fprintf('File %s failed verification with function %s()\n', problem_paths{i}, func2str(verify_function)) ;
+    else
+        fprintf('Verification with function %s() failed for some paths:\n', func2str(verify_function)) ;
+        problem_paths_count = length(problem_paths) ;
+        paths_to_show_count = min(problem_paths_count, 20) ;
+        for i = 1 : paths_to_show_count ,
+            fprintf('  %s\n', problem_paths{i}) ;
+        end
+        if paths_to_show_count < problem_paths_count ,
+            fprintf('  (%d more paths, %d total problematic paths)\n', problem_paths_count-paths_to_show_count, problem_paths_count) ;
         end
         fprintf('Boo!\n') ;
-        is_all_well = false ;
+        error('Verification with function %s() failed for some paths', func2str(verify_function)) ;
     end    
     elapsed_time = toc(tic_id) ;
     fprintf('Elapsed time for verifcation was %g seconds.\n', elapsed_time) ;
@@ -58,7 +63,7 @@ function [verified_ok_count, problem_paths] = ...
         else
             %tif_input_entity_path = fullfile(tif_input_folder_name, tif_input_entity_name) ;    
             %[~,~,ext] = fileparts(raw_tiles_input_entity_name) ;
-            if feval(does_need_verification_predicate, file_path)  ,
+            if feval(does_need_verification_predicate, file_path, varargin{:})  ,
                 % If source is a tif with the right kind of name, check for the corresponding checkpoint files                
                 is_verified = feval(verify_function, file_path, varargin{:}) ;
                 if is_verified ,
