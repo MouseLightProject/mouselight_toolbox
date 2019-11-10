@@ -5,7 +5,7 @@ function job_id = bsub(do_actually_submit, options, function_handle, varargin)
         function_name = func2str(function_handle) ;
         arg_string = generate_arg_string(varargin{:}) ;
         matlab_command = sprintf('modpath; %s(%s);', function_name, arg_string) ;
-        bash_command = sprintf('matlab -nojvm -batch "%s"', matlab_command) ;
+        bash_command = sprintf('matlab -batch "%s"', matlab_command) ;
         bsub_command = ...
             sprintf('bsub %s -oo /dev/null -eo /dev/null %s', options, bash_command) ;
         [status, raw_stdout] = system(bsub_command) ;
