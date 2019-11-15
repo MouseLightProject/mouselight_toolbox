@@ -20,7 +20,7 @@ function [octree_path, ijks_within_chunk] = octree_path_from_ijk(ijks, level_ste
         for i = 1:level_step_count ,
             n = level_step_count-i ;
             halfway_index_at_this_level = (2^n) * chunk_shape ;
-            bits_at_this_level = (ijk_remnant_zero_based>halfway_index_at_this_level) ;
+            bits_at_this_level = (ijk_remnant_zero_based>=halfway_index_at_this_level) ;
             bits(i, :) = bits_at_this_level ;
             ijk_remnant_zero_based = ijk_remnant_zero_based - halfway_index_at_this_level .* bits_at_this_level ;
         end
