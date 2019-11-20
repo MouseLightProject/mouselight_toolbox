@@ -10,7 +10,13 @@ function stack = read_16bit_grayscale_tif(file_name)
         n_rows = 0 ;
     end
     stack  = zeros([n_rows n_cols n_pages], 'uint16');
+%     for i = 1:n_pages ,
+%         stack(:,:,i) = imread(file_name, 'Index', i, 'Info', info) ;
+%     end
+    tif_link = Tiff(file_name, 'r') ;
     for i = 1:n_pages ,
-        stack(:,:,i) = imread(file_name, 'Index', i, 'Info', info) ;
+       tif_link.setDirectory(i) ;
+       stack(:,:,i) = tif_link.read() ;
     end
+    tif_link.close() ;  % do I even need this?  
 end

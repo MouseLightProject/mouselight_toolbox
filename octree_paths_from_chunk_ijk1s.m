@@ -1,10 +1,10 @@
-function octree_path = octree_paths_from_chunk_ijk1s(chunk_ijk1s, level_step_count)
+function octree_path = octree_paths_from_chunk_ijk1s(chunk_ijk1s, zoom_level)
     chunk_ijk0s = chunk_ijk1s - 1 ;
     row_count = size(chunk_ijk1s, 1) ;
-    octree_path = zeros(row_count, level_step_count) ;
+    octree_path = zeros(row_count, zoom_level) ;
     for idx =  1:row_count ,
         chunk_ijk0_this = chunk_ijk0s(idx,:) ;
-        bits = bits_from_chunk_ijk0(chunk_ijk0_this, level_step_count) ;        
+        bits = bits_from_chunk_ijk0(chunk_ijk0_this, zoom_level) ;        
         % Convert to octant code for each coordinate
         octree_path(idx,:) = octree_path_from_bits(bits) ;
     end
@@ -12,17 +12,20 @@ end
 
 
 
-function bits = bits_from_chunk_ijk0(chunk_ijk0, level_step_count)
+function bits = bits_from_chunk_ijk0(chunk_ijk0, zoom_level)
     % chunk_ijk0 is 1 x 3
-    % level_step_count is the number of levels in the octree minus one
-    % bits is level_step_count x 3, columns correspond to xyz.
+    % zoom_level is the number of octal digits needs to specify a leaf at
+    % the current zoom level.  So zoom_level 0 means there's only one leaf,
+    % zoom_level 1 means there's 8^1 leaves, zoom level n means theres 8^n
+    % leaves.
+    % bits is zoom_level x 3, columns correspond to xyz.
     % For each column, each element gives whether the chunk is in the
     % bottom half (0) or top half(1) of the octree at that level, in that
     % dimension.
-    bits = zeros(level_step_count, 3) ;
+    bits = zeros(zoom_level, 3) ;
     for j = 1:3 ,
         n = chunk_ijk0(j) ;
-        n_in_binary = bitget(n, level_step_count:-1:1) ;
+        n_in_binary = bitget(n, zoom_level:-1:1) ;
         bits(:,j) = n_in_binary' ;
     end
 %     for i = 1:level_step_count ,
@@ -41,7 +44,7 @@ function result = octree_path_from_bits(bits)
     % The three columns are x, y, z
     % For each column, each element gives whether the chunk is in the
     % bottom half (0) or top half(1) of the octree at that level.
-    % result is 1 x level_step_count, which each element giving the
+    % result is 1 x zoom_level, which each element giving the
     % morton-ordered octant for each level of the octree.
     % i.e. morton_octant_index = 1 + x_bit + 2*y_bit + 4*z_bit
     result = (1 + sum(bits .* [1 2 4], 2))' ;
