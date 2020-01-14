@@ -7,7 +7,7 @@ function job_id = bsub(do_actually_submit, options, function_handle, varargin)
         matlab_command = sprintf('modpath; %s(%s);', function_name, arg_string) ;
         bash_command = sprintf('matlab -batch "%s"', matlab_command) ;
         bsub_command = ...
-            sprintf('bsub %s -oo /dev/null -eo /dev/null %s', options, bash_command) ;
+            sprintf('bsub %s %s', options, bash_command) ;
         [status, raw_stdout] = system(bsub_command) ;
         if status ~= 0 ,
             error('There was a problem submitting the bsub command %s.  The return code was %d', bsub_command, status) ;
@@ -49,6 +49,21 @@ function result = tostring(thing)
         result = sprintf('''%s''', thing) ;
     elseif isnumeric(thing) || islogical(thing) ,
         result = mat2str(thing) ;
+    elseif isstruct(thing) && isscalar(thing) ,
+        result = 'struct(' ;
+        field_names = fieldnames(thing) ;
+        field_count = length(field_names) ;
+        for i = 1 : field_count ,
+            field_name = field_names{i} ;
+            field_value = thing.(field_name) ;
+            field_value_as_string = tostring(field_value) ;
+            subresult = sprintf('''%s'', {%s}', field_name, field_value_as_string) ;
+            result = horzcat(result, subresult) ; %#ok<AGROW>
+            if i<field_count ,
+                result = horzcat(result, ', ') ; %#ok<AGROW>
+            end            
+        end
+        result = horzcat(result, ')') ;
     else
         error('Don''t know how to convert something of class %s to string', class(thing)) ;
     end
