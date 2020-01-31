@@ -10,9 +10,9 @@ function stack = read_16bit_grayscale_tif(file_name)
         n_rows = 0 ;
     end
     stack  = zeros([n_rows n_cols n_pages], 'uint16');
-    tif_link = Tiff(file_name, 'r') ;
     original_warning_state = warning('query', 'imageio:tiffmexutils:libtiffWarning') ;
     warning('off', 'imageio:tiffmexutils:libtiffWarning') ;
+    tif_link = Tiff(file_name, 'r') ;
     for i = 1:n_pages ,
         tif_link.setDirectory(i) ;
         stack(:,:,i) = tif_link.read() ;
