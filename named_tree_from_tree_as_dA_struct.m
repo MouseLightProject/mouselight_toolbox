@@ -1,9 +1,11 @@
 function result = named_tree_from_tree_as_dA_struct(tree_as_dA_struct, name, color)
     % Process args
     if ~exist('color', 'var') || isempty(color) ,
-        color_map = jet(256) ;
-        color_map_count = size(color_map,1) ;
-        color_index = floor(color_map_count * rand(1)) + 1 ;
+        color_map_count = 256 ;
+        color_map = jet(color_map_count) ;
+        color_index = mod(sum(double(name)), color_map_count) + 1 ;  
+          % Want a "random" number that is nonetheless determined by the
+          % inputs, so we use the world's dumbest hash function.
         color = color_map(color_index,:) ;
     end
     
