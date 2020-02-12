@@ -28,7 +28,8 @@ function result = named_tree_from_undirected_graph(A_tree_raw, xyz_raw, name, co
     [~, root_node_id] = min(degree) ;  % min degree should always be 1
     disc = graphtraverse(A_tree_raw, root_node_id, 'Method', 'DFS') ;
     
-    % Reorder everything so things are in topological order 
+    % Reorder everything so things are in topological order (and unused
+    % node ids are eliminated)
     A_tree = A_tree_raw ;
     A_tree(1:end,:) = A_tree(disc,:) ;
     A_tree(:,1:end) = A_tree(:,disc) ;
