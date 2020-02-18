@@ -3,7 +3,7 @@ function result = named_tree_from_undirected_graph(A_tree_raw, xyz_raw, name, co
     if ~exist('color', 'var') || isempty(color) ,
         color_map_count = 256 ;
         color_map = jet(color_map_count) ;
-        color_index = mod(sum(double(name)), color_map_count) + 1 ;  
+        color_index = hashy(name) + 1 ;  
           % Want a "random" number that is nonetheless determined by the
           % inputs, so we use the world's dumbest hash function.
         color = color_map(color_index,:) ;
