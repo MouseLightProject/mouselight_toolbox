@@ -5,7 +5,7 @@ function stack = get_mouselight_rendered_substack_simple(rendered_folder_name, c
     parameters = read_renderer_calculated_parameters_file(parameter_file_name) ;
     level_step_count = parameters.level_step_count ;
     chunk_shape = parameters.leaf_shape ;
-    [chunk_path, stack_origin_chunk_ijk] = octree_path_from_ijk(stack_origin, level_step_count, chunk_shape) ;
+    [chunk_path, stack_origin_chunk_ijk] = octree_path_from_ijk1(stack_origin, level_step_count, chunk_shape) ;
     stack_far_corner_chunk_ijk = stack_origin_chunk_ijk + stack_shape -1 ;
     if any(stack_far_corner_chunk_ijk > chunk_shape) ,
         error('mouselight:stackMustBeInOneChunk', 'Requested stack has to be contained within one chunk') ;
