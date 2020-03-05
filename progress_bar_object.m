@@ -4,6 +4,7 @@ classdef progress_bar_object < handle
         percent_as_displayed_last_
         did_print_at_least_one_line_
         did_print_final_newline_
+        tic_id_
     end
     
     methods
@@ -12,6 +13,7 @@ classdef progress_bar_object < handle
             self.percent_as_displayed_last_ = [] ;
             self.did_print_at_least_one_line_ = false ;
             self.did_print_final_newline_ = false ;
+            self.tic_id_ = tic() ;
         end
         
         function update(self, i)
@@ -39,6 +41,7 @@ classdef progress_bar_object < handle
                 fprintf('\n') ;
                 self.did_print_final_newline_ = true ;
             end                
+            toc(self.tic_id_) ;
         end
     end
 end
