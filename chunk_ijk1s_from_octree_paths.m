@@ -1,4 +1,4 @@
-function octree_paths = octree_paths_from_chunk_ijk1s(chunk_ijk1s, zoom_level)
+function chunk_ijk1s = chunk_ijk1s_from_octree_paths(octree_paths)
     % An 'octree' with at least zoom-level+1 levels of resolution will have 8^zoom_level chunks at
     % zoom level zoom_level.  (Meaning the level at which it requires
     % zoom_level octal digits to uniquely specify a chunk.)
@@ -17,16 +17,12 @@ function octree_paths = octree_paths_from_chunk_ijk1s(chunk_ijk1s, zoom_level)
     % On output, each row has zoom_level elements, and gives the octree
     % path to the chunk, as a sequence of morton-coded octants.
     
-    chunk_ijk0s = chunk_ijk1s - 1 ;
-    row_count = size(chunk_ijk1s, 1) ;
-    octree_paths = zeros(row_count, zoom_level) ;
+    [row_count, ~] = size(octree_paths) ;
+    chunk_ijk0s = zeros(row_count, 3) ;
     for idx =  1:row_count ,
-        chunk_ijk0_this = chunk_ijk0s(idx,:) ;
-        bits = bits_from_chunk_ijk0(chunk_ijk0_this, zoom_level) ;        
-        % Convert to octant code for each coordinate
-        octree_paths(idx,:) = octree_path_from_bits(bits) ;
+        octree_path = octree_paths(idx,:) ;
+        bits = bits_from_octree_path(octree_path) ;        
+        chunk_ijk0s(idx,:) = chunk_ijk0_from_bits(bits) ;
     end
+    chunk_ijk1s = chunk_ijk0s + 1 ;
 end
-
-
-
