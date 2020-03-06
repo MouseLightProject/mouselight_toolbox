@@ -1,4 +1,9 @@
 function result = get_single_bsub_job_status(job_id)
+    % Possible results are {-1,0,+1}.
+    %   -1 means errored out
+    %    0 mean running or pending
+    %   +1 means completed successfully
+    
     if job_id < 0 ,
         % This is a job that was actually not submitted, so its status is automatically +1
         result = +1 ;
