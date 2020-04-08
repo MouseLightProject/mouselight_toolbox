@@ -28,18 +28,20 @@ function [ijks,edges,A,weights_] = skel2graph(skeleton_txts_folder_name, whole_b
     end
     edges = [pairs{:}]';clear pairs;
 
-    %%
-    %clc
-    clear subs
-    [keepthese,ia,ic] = unique(edges(:,[1 2]));
-    [ijks(:,1),ijks(:,2),ijks(:,3)] = ind2sub(whole_brain_shape([1 2 3]),keepthese);
-    edges_ = reshape(ic,[],2);
-    weights_ = edges(ia,3:end);
-    if isempty(edges_);return;end
-    if isempty(weights_);weights_ = ones(size(edges_,1),1);end
-
-    selfinds = find((edges_(:,1)==edges_(:,2)));
-    if ~isempty(selfinds);edges_(selfinds,:)=[];end
-    A = sparse(edges_(:,1),edges_(:,2),1,max(edges_(:)),max(edges_(:)));
-    A = max(A',A);
+%     %%
+%     %clc
+%     clear subs
+%     [keepthese,ia,ic] = unique(edges(:,[1 2]));
+%     [ijks(:,1),ijks(:,2),ijks(:,3)] = ind2sub(whole_brain_shape([1 2 3]),keepthese);
+%     edges_ = reshape(ic,[],2);
+%     weights_ = edges(ia,3:end);
+%     if isempty(edges_);return;end
+%     if isempty(weights_);weights_ = ones(size(edges_,1),1);end
+% 
+%     selfinds = find((edges_(:,1)==edges_(:,2)));
+%     if ~isempty(selfinds);edges_(selfinds,:)=[];end
+%     A = sparse(edges_(:,1),edges_(:,2),1,max(edges_(:)),max(edges_(:)));
+%     A = max(A',A);
+    
+    [A, ijks, weights_] = skel2graph_core(edges, whole_brain_shape) ;
 end
