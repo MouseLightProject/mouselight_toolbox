@@ -1,4 +1,4 @@
-function node_ids_from_chain_id = chains_from_rooted_tree(dA)
+function node_ids_from_chain_id = chains_from_rooted_tree_in_place(dA, is_retained_from_node_id)
     % Given adjacency matrix dA representing a rooted tree,
     % returns a set of chains.  The first and last node of each chain is a
     % node_id into A, and each is a nexus node.  All nodes in A are
@@ -9,10 +9,12 @@ function node_ids_from_chain_id = chains_from_rooted_tree(dA)
 %     figure() ;
 %     plot(dG) ;
 
-    if isempty(dA) ,
+    node_count = sum(is_retained_from_node_id) ;
+
+    if node_count == 0 ,
         node_ids_from_chain_id = cell(1,0) ;
         return
-    elseif isscalar(dA) ,
+    elseif node_count == 1 ,
         % The graph has a single node
         node_ids_from_chain_id = {1} ;
         return        
@@ -20,14 +22,14 @@ function node_ids_from_chain_id = chains_from_rooted_tree(dA)
     
     % Find the non-root nexus nodes---each of these will be the start of a
     % chain
-    in_degree_from_node_id = full(sum(dA,1)') ;
-    out_degree_from_node_id = full(sum(dA,2)) ;
-    is_root_from_node_id = (out_degree_from_node_id==0) ;
-    is_chain_node_from_node_id = (in_degree_from_node_id==1) & (out_degree_from_node_id==1) ;
-    is_nexus_from_node_id = ~is_chain_node_from_node_id ;
-    is_nonroot_nexus_from_node_id = is_nexus_from_node_id & ~is_root_from_node_id ;
-    distal_nexus_node_id_from_chain_id = find(is_nonroot_nexus_from_node_id) ;
-    chain_count = length(distal_nexus_node_id_from_chain_id) ;
+    in_degree_from_node_id = full(sum(dA,1)') .* is_retained_from_node_id ;
+    out_degree_from_node_id = full(sum(dA,2)) .* is_retained_from_node_id ;
+    is_root_from_node_id = is_retained_from_node_id & (out_degree_from_node_id==0) ;
+    is_limb_node_from_node_id = (in_degree_from_node_id==1) & (out_degree_from_node_id==1) ;
+    is_nonlimb_from_node_id = ~is_limb_node_from_node_id & is_retained_from_node_id ;
+    is_nonroot_nonlimb_from_node_id = is_nonlimb_from_node_id & ~is_root_from_node_id ;
+    distal_nonlimb_node_id_from_chain_id = find(is_nonroot_nonlimb_from_node_id) ;
+    chain_count = length(distal_nonlimb_node_id_from_chain_id) ;
     
     % Traverse the rooted tree.  This will make lookups faster later
     root_node_id = find(is_root_from_node_id) ;
@@ -37,9 +39,9 @@ function node_ids_from_chain_id = chains_from_rooted_tree(dA)
     % node
     node_ids_from_chain_id = cell(chain_count, 1) ;
     for chain_id = 1 : chain_count ,
-        distal_node_id = distal_nexus_node_id_from_chain_id(chain_id) ;
+        distal_node_id = distal_nonlimb_node_id_from_chain_id(chain_id) ;
         node_ids_in_this_chain  = ...
-            trace_chain(distal_node_id, parent_node_id_from_node_id, is_nexus_from_node_id) ;
+            trace_chain(distal_node_id, parent_node_id_from_node_id, is_nonlimb_from_node_id) ;
         node_ids_from_chain_id{chain_id} = node_ids_in_this_chain ;
     end
 end

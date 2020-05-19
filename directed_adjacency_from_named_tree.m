@@ -1,4 +1,4 @@
-function dA = dA_from_named_tree(named_tree)
+function dA = directed_adjacency_from_named_tree(named_tree)
     % Get the parent of each node (parent means next node root-ward)
     parent = named_tree.parent ;
     

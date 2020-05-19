@@ -1,20 +1,26 @@
-function [A_result, xyz_result] = prune_tree(A_tree, xyz_tree, length_threshold, do_visualize)  %#ok<INUSD>
-    A_result = A_tree ;
-    xyz_result = xyz_tree ;
+function [A_pruned, xyz_pruned, node_id_from_pruned_node_index] = ...
+        prune_tree_with_id_tracking(A_tree, xyz_tree, node_id_from_tree_node_index, length_threshold, do_visualize)  %#ok<INUSD>
+    % The "in_place" just means that the result is in terms of the same
+    % nodes as input.
+    node_count = size(xyz_tree, 1) ;
+    is_retained_from_node_index = true(node_count, 1) ;
     did_prune_some = true ;  % just to get prune_tree_some() to be called at least once
     while did_prune_some ,
-        [A_result, xyz_result, did_prune_some] = prune_tree_some(A_result, xyz_result, length_threshold) ;
+        [is_retained_from_node_index, did_prune_some] = prune_tree_some(is_retained_from_node_index, A_tree, xyz_tree, length_threshold) ;
 %         if do_visualize ,
 %             hold on
 %             gplot3(A_result, xyz_result);
 %             drawnow
 %         end
     end
+    A_pruned = A_tree(is_retained_from_node_index, is_retained_from_node_index) ;
+    xyz_pruned = xyz_tree(is_retained_from_node_index, :) ;
+    node_id_from_pruned_node_index = node_id_from_tree_node_index(is_retained_from_node_index) ;
 end
 
 
 
-function [A_tree_output, xyz_output, did_prune_some] = prune_tree_some(A_tree_input, xyz, length_threshold)
+function [is_retained_from_node_id_output, did_prune_some] = prune_tree_some(is_retained_from_node_id_input, A_tree, xyz, length_threshold)
     % length_threshold should be in um.  Leaf chains shorter than that will be
     % trimmed off.
     
@@ -22,22 +28,30 @@ function [A_tree_output, xyz_output, did_prune_some] = prune_tree_some(A_tree_in
     % node, and all the leaf nodes will be the first element of some chain,
     % unless the tree is a chain, in which case there will only one chain,
     % and it will start with a leaf node.
-    chains = chains_from_tree(A_tree_input) ;
-    chain_count = length(chains) ;
+    A_retained = A_tree(is_retained_from_node_id_input, is_retained_from_node_id_input) ;
+    chains_in_terms_of_retained_node_indices = chains_from_tree(A_retained) ;
+    chain_count = length(chains_in_terms_of_retained_node_indices) ;
 
     % If the tree is a single chain, don't bother to prune
     if chain_count == 1 ,
-        A_tree_output = A_tree_input ;
-        xyz_output = xyz ;
+        is_retained_from_node_id_output = is_retained_from_node_id_input ;
         did_prune_some = false ;
         return
     end
+    
+    % If get here, the tree is not just a single chain
 
-    % If get here, the tree is not a chain
+    % Put the chains in terms of node IDs
+    node_count = length(is_retained_from_node_id_input) ;
+    node_id_from_node_id = (1:node_count)' ; 
+    node_id_from_retained_node_index = node_id_from_node_id(is_retained_from_node_id_input) ;
+    chains = cellfun(@(chain_in_terms_of_retained_node_indices)(node_id_from_retained_node_index(chain_in_terms_of_retained_node_indices)), ...
+                     chains_in_terms_of_retained_node_indices, ...
+                     'UniformOutput', false) ;  % these are in terms of the node_ids
     
     % Get just the chains that start with leaf nodes
-    degree = full(sum(A_tree_input)) ;
-    is_leaf_node = (degree==1) ;
+    degree_from_node_id = full(sum(A_tree)) ;
+    is_leaf_node = (degree_from_node_id==1) ;
     do_keep_chain = cellfun(@(chain)(is_leaf_node(chain(1))), chains) ;
     leaf_chains = chains(do_keep_chain) ;    
     leaf_chain_count = length(leaf_chains) ;
@@ -83,7 +97,7 @@ function [A_tree_output, xyz_output, did_prune_some] = prune_tree_some(A_tree_in
     end
 
     % Mark all nodes of the doomed leaf node chains as doomed
-    node_count = length(degree) ;
+    %node_count = length(degree_from_node_id) ;
     is_doomed_from_node_id = false(node_count, 1) ;
     for i = 1 : leaf_chain_count ,
          if is_doomed_from_leaf_chain_index(i) ,
@@ -93,11 +107,7 @@ function [A_tree_output, xyz_output, did_prune_some] = prune_tree_some(A_tree_in
          end
     end
 
-    % Populate the outputs.  Basically the same as the inputs, but with
-    % doomed nodes deleted.
-    A_tree_output = A_tree_input ;
-    A_tree_output(is_doomed_from_node_id,:) = [] ;
-    A_tree_output(:,is_doomed_from_node_id) = [] ;
-    xyz_output = xyz(~is_doomed_from_node_id,:) ;
+    % Populate the outputs.
+    is_retained_from_node_id_output = is_retained_from_node_id_input & ~is_doomed_from_node_id ;
     did_prune_some = any(is_doomed_from_node_id) ;
 end

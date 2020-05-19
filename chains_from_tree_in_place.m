@@ -1,4 +1,4 @@
-function node_ids_from_chain_id = chains_from_tree(A_tree, root_node_id)
+function node_ids_from_chain_id = chains_from_tree_in_place(A_tree, is_retained_from_node_id, root_node_id)
     % Given symmetric adjacency matrix A representing an undirected tree,
     % returns a set of chains.  The first and last node of each chain is a
     % node_id into A, and each is a nexus node.  All nodes in A are
@@ -9,7 +9,9 @@ function node_ids_from_chain_id = chains_from_tree(A_tree, root_node_id)
 %     figure() ;
 %     plot(G) ;
 
-    if isempty(A_tree) ,
+    node_count = sum(is_retained_from_node_id) ;
+
+    if node_count == 0 ,
         node_ids_from_chain_id = cell(1,0) ;
         return
     end
@@ -44,8 +46,8 @@ function node_ids_from_chain_id = chains_from_tree(A_tree, root_node_id)
     % The 'root' node will basically be a random leaf, which is what we
     % want.
     %dA = spanning_tree_adjacency_from_graph_adjacency(A_tree) ;    
-    dA = rooted_tree_from_connected_graph(A_tree, root_node_id) ;
+    dA = rooted_tree_from_connected_graph_in_place(A_tree, is_retained_from_node_id, root_node_id) ;
     
     % 
-    node_ids_from_chain_id = chains_from_rooted_tree(dA) ;
+    node_ids_from_chain_id = chains_from_rooted_tree_in_place(dA, is_retained_from_node_id) ;
 end
