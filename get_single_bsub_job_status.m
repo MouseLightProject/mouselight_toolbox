@@ -4,7 +4,10 @@ function result = get_single_bsub_job_status(job_id)
     %    0 mean running or pending
     %   +1 means completed successfully
     
-    if job_id < 0 ,
+    if ~isfinite(job_id) ,
+        % This means the job has not been submitted yet
+        result = nan ;
+    elseif job_id < 0 ,
         % This is a job that was actually not submitted, so its status is automatically +1
         result = +1 ;
     else
