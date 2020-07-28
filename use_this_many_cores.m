@@ -18,7 +18,7 @@ end
 function parpool_fancy(core_count_desired)
     % Like parpool, but deals if core_count_desired is inf
     if isinf(core_count_desired) ,
-        physical_core_count = feature('numcores') ;
+        physical_core_count = get_maximum_core_count() ;
         core_count_we_will_request = physical_core_count ;
     else
         core_count_we_will_request = core_count_desired ;

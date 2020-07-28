@@ -1,5 +1,5 @@
 function use_this_fraction_of_cores(fraction)
-    physical_core_count = feature('numcores') ;
+    physical_core_count = get_maximum_core_count() ;
     maximum_core_count_desired = round(fraction * physical_core_count) ;
     poolobj = gcp('nocreate');  % Get the current pool, if one exists, but don't create one.
     if isempty(poolobj) ,
