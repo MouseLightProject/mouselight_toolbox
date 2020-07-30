@@ -1,28 +1,32 @@
 classdef bqueue_type < handle
     properties (SetAccess = private)
         do_actually_submit = true
-        options = cell(1,0)
+        bsub_options = ''
         function_handle = cell(1,0)
         other_arguments = cell(1,0)
         %job_status = nan(1,0) ;
+        maximum_running_slot_count = inf        
         maximum_running_job_count = inf        
+        slots_per_job = 1
         job_ids = zeros(1,0)
         has_job_been_submitted = false(1,0)
     end
     
     methods
-        function self = bqueue_type(do_actually_submit, maximum_running_job_count)
+        function self = bqueue_type(do_actually_submit, bsub_options, slots_per_job, maximum_running_slot_count)
             self.do_actually_submit = do_actually_submit ;
-            self.maximum_running_job_count = maximum_running_job_count ;
+            self.bsub_options = bsub_options ;
+            self.slots_per_job = slots_per_job ;
+            self.maximum_running_slot_count = maximum_running_slot_count ;
+            self.maximum_running_job_count = floor(maximum_running_slot_count/slots_per_job) ;            
         end
         
         function result = queue_length(self)
             result = length(self.has_job_been_submitted) ;
         end
         
-        function enqueue(self, options, function_handle, varargin)
+        function enqueue(self, function_handle, varargin)
             job_index = self.queue_length() + 1 ;
-            self.options{1,job_index} = options ;
             self.function_handle{1,job_index} = function_handle ;
             self.other_arguments(1,job_index) = {varargin(:)} ;            
             %self.job_status(1,job_index) = nan ;  % nan means unsubmitted
@@ -62,11 +66,11 @@ classdef bqueue_type < handle
                         job_indices_to_submit = submittable_job_indices ;
                     end
                     jobs_to_submit_count = length(job_indices_to_submit) ;
+                    this_options = sprintf('-n %d -oo /dev/null -eo /dev/null %s', self.slots_per_job, self.bsub_options) ;
                     for i = 1 : jobs_to_submit_count ,
                         job_index = job_indices_to_submit(i) ;
                         this_function_handle = self.function_handle{job_index} ;
                         this_other_arguments = self.other_arguments{job_index} ;
-                        this_options = self.options{job_index} ;
                         this_job_id = bsub(self.do_actually_submit, this_options, this_function_handle, this_other_arguments{:}) ;
                         self.job_ids(job_index) = this_job_id ;
                         self.has_job_been_submitted(job_index) = true ;
@@ -81,7 +85,7 @@ classdef bqueue_type < handle
                 have_all_exited = (exited_job_count==job_count) ;        
                 if ~have_all_exited ,  
                     if self.do_actually_submit ,
-                        pause(10) ;
+                        pause(1) ;
                     end
                     is_time_up = (toc(ticId) > maximum_wait_time) ;
                 end
