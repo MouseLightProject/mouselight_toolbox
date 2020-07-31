@@ -19,6 +19,9 @@ classdef bqueue_type < handle
             self.slots_per_job = slots_per_job ;
             self.maximum_running_slot_count = maximum_running_slot_count ;
             self.maximum_running_job_count = floor(maximum_running_slot_count/slots_per_job) ;            
+            if self.maximum_running_job_count == 0 ,
+                error('Maximum running job count is zero') ;
+            end
         end
         
         function result = queue_length(self)
