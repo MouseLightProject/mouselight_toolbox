@@ -1,4 +1,4 @@
-function [ijks,edges,A,weights_] = skel2graph(skeleton_txts_folder_name, whole_brain_shape)
+function [ijks, edges, A] = skel2graph(skeleton_txts_folder_name, whole_brain_shape)
 
     mydir = dir(fullfile(skeleton_txts_folder_name,'*.txt'));
     % check the format for a non zero file
@@ -43,5 +43,5 @@ function [ijks,edges,A,weights_] = skel2graph(skeleton_txts_folder_name, whole_b
 %     A = sparse(edges_(:,1),edges_(:,2),1,max(edges_(:)),max(edges_(:)));
 %     A = max(A',A);
     
-    [A, ijks, weights_] = skel2graph_core(edges, whole_brain_shape) ;
+    [A, ijks] = skel2graph_core(edges, whole_brain_shape) ;
 end
