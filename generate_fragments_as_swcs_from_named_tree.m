@@ -9,7 +9,7 @@ function generate_fragments_as_swcs_from_named_tree(fragment_output_folder_path,
     r = named_tree.r ;
     d = named_tree.tag_code ;
     
-    dA = dA_from_named_tree(named_tree) ;  % directed adjacency
+    dA = directed_adjacency_from_named_tree(named_tree) ;  % directed adjacency
     chains = chains_from_rooted_tree(dA) ;    
     %L = getBranches_old(dA) ;
     fragment_count = length(chains) ;

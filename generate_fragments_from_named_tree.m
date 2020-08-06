@@ -1,7 +1,9 @@
-function result = generate_fragments_as_named_trees_from_named_tree(named_tree, ...
-                                                                    minimum_centerpoint_count_per_fragment, ...
-                                                                    bounding_box_low_corner_xyz, ...
-                                                                    bounding_box_high_corner_xyz)
+function generate_fragments_from_named_tree(fragment_output_folder_path, ...
+                                            named_tree, ...
+                                            file_format, ...
+                                            minimum_centerpoint_count_per_fragment, ...
+                                            bounding_box_low_corner_xyz, ...
+                                            bounding_box_high_corner_xyz)
 
     % Extract tree information                                          
     xyz = named_tree.xyz ;  % um
@@ -20,10 +22,8 @@ function result = generate_fragments_as_named_trees_from_named_tree(named_tree, 
     digits_needed_for_fragment_index = floor(log10(fragment_count)) + 1 ;
     fragment_name_template = sprintf('%s-branch-%%0%dd', named_tree.name, digits_needed_for_fragment_index) ;  % e.g. 'tree-%04d'
     
-    % Write each fragment to disk as a .swc file
-    is_valid_fragment = false(1, fragment_count) ;
-    protoresult = empty_named_tree_struct(1, fragment_count) ;
-    for fragment_id = 1:fragment_count ,
+    % Write each fragment to disk as a .swc/.mat file
+    parfor fragment_id = 1:fragment_count ,
         tree_node_ids_in_chain = chains{fragment_id} ;
         if fragment_count>1 ,
             tree_node_ids_in_fragment = tree_node_ids_in_chain(1:end-1) ;  % trim one end to leave some space at branch points
@@ -34,20 +34,20 @@ function result = generate_fragments_as_named_trees_from_named_tree(named_tree, 
             continue
         end        
         
-        % .swc file name
+        % fragment file name
         fragment_name = sprintf(fragment_name_template, fragment_id) ;
-        %fragment_swc_file_name = sprintf('%s.swc', fragment_name) ;
-        %fragment_swc_file_path = fullfile(fragment_output_folder_path, fragment_swc_file_name);
+        fragment_file_name = sprintf('%s.%s', fragment_name, file_format) ;
+        fragment_file_path = fullfile(fragment_output_folder_path, fragment_file_name);
 
-%         % If the output file already exists, skip it
-%         if exist(fragment_swc_file_path, 'file') ,
-%             continue ;
-%         end
+        % If the output file already exists, skip it
+        if exist(fragment_file_path, 'file') ,
+            continue ;
+        end
         
         % Get the centerpoints for this fragment
-        xyz_this_fragment = xyz(tree_node_ids_in_fragment,:) ; 
+        xyz_this_fragment = xyz(tree_node_ids_in_fragment,:) ;
         r_this_fragment = r(tree_node_ids_in_fragment) ;
-        d_this_fragment = d(tree_node_ids_in_fragment) ; 
+        d_this_fragment = d(tree_node_ids_in_fragment) ;
 
         % Don't write an swc for fragments with too few centerpoints
         fragment_node_count = size(xyz_this_fragment,1) ;
@@ -72,11 +72,7 @@ function result = generate_fragments_as_named_trees_from_named_tree(named_tree, 
         fragment_color = color_from_fragment_id(fragment_id,:) ;
         fragment_as_named_tree = new_named_tree(fragment_name, fragment_color, xyz_this_fragment, r_this_fragment, parent_ids, d_this_fragment) ;
         
-        % Save the fragment to the result array
-        protoresult(fragment_id) = fragment_as_named_tree ;
-        is_valid_fragment(fragment_id) = true ;
+        % Save the fragment to a .swc file
+        save_named_tree(fragment_file_path, fragment_as_named_tree) ;        
     end
-    
-    % Filter out just the valid fragments
-    result = protoresult(is_valid_fragment) ;
 end
