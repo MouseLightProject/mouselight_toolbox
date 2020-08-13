@@ -17,7 +17,8 @@ function generate_fragments(input_folder_path, ...
     tic_id = tic() ;
     fprintf('Starting the outer for loop, going to process %d full trees...\n', full_trees_to_process_count) ;
     parfor_progress(full_trees_to_process_count) ;
-    for full_tree_index = 1 : full_trees_to_process_count ,
+    %for full_tree_index = 1 : full_trees_to_process_count ,
+    for full_tree_index = full_trees_to_process_count : -1 : 1 ,
         full_tree_file_name = full_tree_file_names{full_tree_index} ;
         full_tree_mat_file_path = fullfile(input_folder_path, full_tree_file_name) ;
         named_tree = load_named_tree_from_mat(full_tree_mat_file_path) ;
