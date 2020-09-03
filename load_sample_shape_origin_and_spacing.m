@@ -1,4 +1,4 @@
-function [shape_xyz, origin, spacing, jaws_origin] = load_sample_shape_origin_and_spacing(rendered_folder_name)
+function [shape_xyz, origin, spacing, jaws_origin, resolution_step_count] = load_sample_shape_origin_and_spacing(rendered_folder_name)
 %     transform_file_name = fullfile(sample_folder_name, 'transform.txt') ;    
 %     transform_as_raw_struct = configparser(transform_file_name) ;
 %         % has fields, ox, oy, oz, sx, sy, sz, all in nm

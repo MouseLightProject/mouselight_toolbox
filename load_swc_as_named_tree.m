@@ -21,6 +21,9 @@ function tree = load_swc_as_named_tree(swc_file_name)
     header = cell(1);
 
     fid = fopen(swc_file_name);
+    if fid < 0 ,
+        error('Unable to open .swc file %s for reading', swc_file_name) ;
+    end
     this_line = fgets(fid);
     skipline = 0;
     header_line_count = 1;
