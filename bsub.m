@@ -16,13 +16,21 @@ function job_id = bsub(do_actually_submit, options, function_handle, varargin)
         raw_tokens = strsplit(stdout) ;
         is_token_nonempty = cellfun(@(str)(~isempty(str)), raw_tokens) ;
         tokens = raw_tokens(is_token_nonempty) ;
-        if length(tokens)<2 ,
+        is_job_token = strcmp(tokens, 'Job') ;
+        job_token_index = find(is_job_token, 1) ;
+        if isempty(job_token_index) ,
             error('There was a problem submitting the bsub command %s.  Unable to parse output to get job id.  Output was: %s', bsub_command, stdout) ;
         end
-        if ~isequal(tokens{1}, 'Job') ,
+        if length(tokens) < job_token_index+3 ,
             error('There was a problem submitting the bsub command %s.  Unable to parse output to get job id.  Output was: %s', bsub_command, stdout) ;
         end
-        job_id_token = tokens{2} ;
+        if ~isequal(tokens{job_token_index+2}, 'is') ,
+            error('There was a problem submitting the bsub command %s.  Unable to parse output to get job id.  Output was: %s', bsub_command, stdout) ;
+        end
+        if ~isequal(tokens{job_token_index+3}, 'submitted') ,
+            error('There was a problem submitting the bsub command %s.  Unable to parse output to get job id.  Output was: %s', bsub_command, stdout) ;
+        end
+        job_id_token = tokens{job_token_index+1} ;
         if length(job_id_token)<2 ,
             error('There was a problem submitting the bsub command %s.  Unable to parse output to get job id.  Output was: %s', bsub_command, stdout) ;
         end

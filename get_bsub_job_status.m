@@ -12,7 +12,7 @@ function result = get_bsub_job_status(job_ids)
     if all(is_not_yet_submitted | is_not_going_to_be_submitted) ,
         return
     end
-    was_submitted = ~(is_not_yet_submitted | is_not_yet_submitted) ;
+    was_submitted = ~(is_not_going_to_be_submitted | is_not_yet_submitted) ;
     submitted_job_ids = job_ids(was_submitted) ;
     bjobs_lines = get_bjobs_lines(submitted_job_ids) ;
     bjobs_line_index = 1 ;
