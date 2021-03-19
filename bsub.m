@@ -1,17 +1,21 @@
-function job_id = bsub(do_actually_submit, options, function_handle, varargin)
+function job_id = bsub(do_actually_submit, slot_count, stdouterr_file_name, options, function_handle, varargin)
     % Wrapper for LSF bsub command.  Returns job id as a double.
     % Throws error if anything goes wrong.
+    if isempty(slot_count) ,
+        slot_count = 1 ;
+    end    
+    if isempty(stdouterr_file_name) ,
+        stdouterr_file_name = '/dev/null' ;
+    end    
     if do_actually_submit ,
         function_name = func2str(function_handle) ;
         arg_string = generate_arg_string(varargin{:}) ;
         matlab_command = sprintf('modpath; %s(%s);', function_name, arg_string) ;
         bash_command = sprintf('matlab -batch "%s"', matlab_command) ;
         bsub_command = ...
-            sprintf('bsub -eo /dev/null -oo /dev/null %s %s', options, bash_command) ;
-        [status, raw_stdout] = system(bsub_command) ;
-        if status ~= 0 ,
-            error('There was a problem submitting the bsub command %s.  The return code was %d', bsub_command, status) ;
-        end
+            sprintf('bsub -n %d -eo %s -oo %s %s %s', slot_count, stdouterr_file_name, stdouterr_file_name, options, bash_command) ;
+        %fprintf('%s\n', bsub_command) ;
+        raw_stdout = system_with_error_handling(bsub_command) ;
         stdout = strtrim(raw_stdout) ;  % There are leading newlines and other nonsense in the raw version
         raw_tokens = strsplit(stdout) ;
         is_token_nonempty = cellfun(@(str)(~isempty(str)), raw_tokens) ;
@@ -72,6 +76,27 @@ function result = tostring(thing)
             end            
         end
         result = horzcat(result, ')') ;
+    elseif iscell(thing) && (isempty(thing) || isvector(thing)) ,
+        if isempty(thing) ,
+            result = sprintf('cell(%d,%d)', size(thing,1), size(thing,2)) ;
+        else
+            if iscolumn(thing) ,
+                separator = ';' ;
+            else
+                separator = ',' ;
+            end            
+            result = '{ ' ;
+            element_count = length(thing) ;
+            for i = 1 : element_count ,
+                element_value = thing{i} ;
+                element_value_as_string = tostring(element_value) ;
+                result = horzcat(result, element_value_as_string) ; %#ok<AGROW>
+                if i<element_count ,
+                    result = horzcat(result, [separator ' ']) ; %#ok<AGROW>
+                end            
+            end
+            result = horzcat(result, ' }') ;
+        end
     else
         error('Don''t know how to convert something of class %s to string', class(thing)) ;
     end

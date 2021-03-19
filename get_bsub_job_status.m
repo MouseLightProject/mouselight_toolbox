@@ -7,7 +7,7 @@ function result = get_bsub_job_status(job_ids)
     job_count = length(job_ids) ;
     result = nan(size(job_ids)) ;
     is_not_yet_submitted = isnan(job_ids) ;
-    is_not_going_to_be_submitted = (job_ids<0) ;
+    is_not_going_to_be_submitted = (job_ids<0) ;  % means the job was run locally, and completed without error
     result(is_not_going_to_be_submitted) = +1 ;
     if all(is_not_yet_submitted | is_not_going_to_be_submitted) ,
         return
