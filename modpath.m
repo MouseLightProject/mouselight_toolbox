@@ -2,6 +2,7 @@ function modpath()
     this_script_file_path = mfilename('fullpath') ;
     this_folder_path = fileparts(this_script_file_path) ;
     addpath(degit(genpath(fullfile(this_folder_path,'landmark-matching'))));
+    addpath(fullfile(this_folder_path,'foreground-classifiers')) ;
     addpath(this_folder_path) ;
 end
 

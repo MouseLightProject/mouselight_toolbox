@@ -6,3 +6,6 @@ parfor_progress.txt
 *.stdout
 *.stderr
 *.stdouterr
+foreground-classifiers/data/
+foreground-classifiers/2021-03-17/
+
