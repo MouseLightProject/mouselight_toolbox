@@ -8,12 +8,18 @@ function run_ilastik_on_stack(output_file_path, input_file_name)
     %     fullfile(script_folder_path, 'axon_uint16.ilp') ;
     % ilastik_root_path = '/groups/mousebrainmicro/mousebrainmicro/pipeline-systems/tools/ilastik-1.1.9-Linux' ;
         
-    % The 2021-03-17 classifier
+%     % The 2021-03-17 classifier
+%     ilastik_project_path = ...
+%         fullfile(script_folder_path, 'alt-awesome-foreground-classifier-for-2021-03-17.ilp') ;
+%     ilastik_root_path = ...
+%         '/groups/mousebrainmicro/mousebrainmicro/pipeline-systems/tools/ilastik-1.3.3-Linux' ;       
+
+    % The 2021-10-29 classifier
     ilastik_project_path = ...
-        fullfile(script_folder_path, 'alt-awesome-foreground-classifier-for-2021-03-17.ilp') ;
+        fullfile(script_folder_path, 'alt-awesome-foreground-classifier-for-2021-10-29.ilp') ;
     ilastik_root_path = ...
         '/groups/mousebrainmicro/mousebrainmicro/pipeline-systems/tools/ilastik-1.3.3-Linux' ;       
-
+    
     % The production classifier is designed to be used with Ilastik 1.1.9,
     % which seems to compress HDF5 output files by default.
     % In all cases, we want the output files to be compressed HDF5.
