@@ -2,28 +2,39 @@
 use_this_fraction_of_cores(1) ;
 
 % Set params for early jobs
-do_use_bsub = false ;
-do_actually_submit = false ;
+do_use_bsub = true ;
+do_actually_submit = true ;
 max_running_slot_count = inf ;
 bsub_option_string = '-P mouselight -J mouselight-pipeline-123' ;
 slots_per_job = 4 ;
 stdouterr_file_path = '' ;  % will go to /dev/null
 
 
-% Build the tile index
+% Build the full tile index
 raw_tile_index = compute_or_read_from_memo(sample_memo_folder_path, ...
                                            'raw-tile-index', ...
                                            @()(build_raw_tile_index(raw_root_path)), ...
                                            do_force_computation) ;
-tile_index_from_tile_ijk1 = raw_tile_index.tile_index_from_tile_ijk1 ;
-ijk1_from_tile_index = raw_tile_index.ijk1_from_tile_index ;
-%xyz_from_tile_index = raw_tile_index.xyz_from_tile_index ;
-relative_path_from_tile_index = raw_tile_index.relative_path_from_tile_index ;
-%raw_tile_map_shape = size(tile_index_from_tile_ijk1)
-tile_count = length(relative_path_from_tile_index) 
+full_tile_index_from_full_tile_ijk1 = raw_tile_index.tile_index_from_tile_ijk1 ;
+full_tile_ijk1_from_full_tile_index = raw_tile_index.ijk1_from_tile_index ;
+xyz_from_full_tile_index = raw_tile_index.xyz_from_tile_index ;
+relative_path_from_full_tile_index = raw_tile_index.relative_path_from_tile_index ;
+full_tile_grid_shape = size(full_tile_index_from_full_tile_ijk1)
+full_tile_count = length(relative_path_from_full_tile_index) 
 
 
-
+% Get out just the tiles around the center_tile
+[tile_index_from_tile_ijk1, ...
+ tile_ijk1_from_tile_index, ...
+ xyz_from_tile_index, ...
+ relative_path_from_tile_index] = ...
+    extract_tiles_near_tile(full_tile_index_from_full_tile_ijk1, ...
+                            full_tile_ijk1_from_full_tile_index, ...
+                            xyz_from_full_tile_index, ...
+                            relative_path_from_full_tile_index, ...
+                            center_tile_relative_path) ;
+tile_count = length(relative_path_from_tile_index)
+        
 %
 % Figure out which tiles need to be run
 %
