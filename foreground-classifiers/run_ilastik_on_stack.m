@@ -1,34 +1,31 @@
-function run_ilastik_on_stack(output_file_path, input_file_name)
+function run_ilastik_on_stack(output_file_path, input_file_name, ilastik_project_file_name)
     % Get path to this script's folder, b/c Ilastik .ilp files are in the same
     % folder
     script_folder_path = fileparts(mfilename('fullpath')) ;
     
-    % % The production classifier    
-    % ilastik_project_path = ...
-    %     fullfile(script_folder_path, 'axon_uint16.ilp') ;
-    % ilastik_root_path = '/groups/mousebrainmicro/mousebrainmicro/pipeline-systems/tools/ilastik-1.1.9-Linux' ;
-        
-%     % The 2021-03-17 classifier
-%     ilastik_project_path = ...
-%         fullfile(script_folder_path, 'alt-awesome-foreground-classifier-for-2021-03-17.ilp') ;
-%     ilastik_root_path = ...
-%         '/groups/mousebrainmicro/mousebrainmicro/pipeline-systems/tools/ilastik-1.3.3-Linux' ;       
-
-    % The 2021-10-29 classifier
-    ilastik_project_path = ...
-        fullfile(script_folder_path, 'alt-awesome-foreground-classifier-for-2021-10-29.ilp') ;
-    ilastik_root_path = ...
-        '/groups/mousebrainmicro/mousebrainmicro/pipeline-systems/tools/ilastik-1.3.3-Linux' ;       
-    
-    % The production classifier is designed to be used with Ilastik 1.1.9,
-    % which seems to compress HDF5 output files by default.
-    % In all cases, we want the output files to be compressed HDF5.
-    if contains(ilastik_root_path, 'ilastik-1.1.9') ,            
+    production_classifier_ilastik_project_file_name = 'axon_uint16.ilp' ;
+    if ~exist('ilastik_project_file_name', 'var') || isempty(ilastik_project_file_name) || ...
+            strcmp(ilastik_project_file_name, production_classifier_ilastik_project_file_name) ,
+        % Use the production classifier    
+        ilastik_project_path = ...
+            fullfile(script_folder_path, production_classifier_ilastik_project_file_name) ;
+        ilastik_root_path = '/groups/mousebrainmicro/mousebrainmicro/pipeline-systems/tools/ilastik-1.1.9-Linux' ;
+        % The production classifier is designed to be used with Ilastik 1.1.9,
+        % which seems to compress HDF5 output files by default.
+        % In all cases, we want the output files to be compressed HDF5.
         output_format = 'hdf5' ;
     else
+        ilastik_project_path = ...
+            fullfile(script_folder_path, ilastik_project_file_name) ;
+        % Use newer Ilastik if user has specified a non-production classifier
+        ilastik_root_path = ...
+            '/groups/mousebrainmicro/mousebrainmicro/pipeline-systems/tools/ilastik-1.3.3-Linux' ;       
+        % The production classifier is designed to be used with Ilastik 1.1.9,
+        % which seems to compress HDF5 output files by default.
+        % In all cases, we want the output files to be compressed HDF5.
         output_format = 'compressed hdf5' ;
     end
-
+    
     %'multipage tiff', 'multipage tiff sequence', 'hdf5'
     python_path = fullfile(ilastik_root_path, 'bin/python') ;
     ilastik_dot_py_path = fullfile(ilastik_root_path, 'ilastik-meta/ilastik/ilastik.py') ;

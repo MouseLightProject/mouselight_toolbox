@@ -1,5 +1,5 @@
 function lpl_process_single_tile(tile_relative_path, raw_root_path, line_fix_root_path, p_map_root_path, landmark_root_path, ...
-                                 do_line_fix, do_force_computation, do_run_in_debug_mode)
+                                 do_line_fix, ilastik_project_file_name, do_force_computation, do_run_in_debug_mode)
     % sample date something like '2021-09-16'
     % tile_relative_path something like '2021-09-17/00/00000'
     
@@ -39,6 +39,6 @@ function lpl_process_single_tile(tile_relative_path, raw_root_path, line_fix_roo
     for tile_file_index = 1 : tile_file_count ,
         raw_imagery_tile_file_name = raw_imagery_tile_file_names{tile_file_index} ;                
         lpl_process_single_tile_channel(...
-            raw_imagery_tile_file_name, tile_relative_path, p_map_input_root_path, p_map_root_path, landmark_root_path) ;
+            raw_imagery_tile_file_name, tile_relative_path, p_map_input_root_path, p_map_root_path, landmark_root_path, ilastik_project_file_name) ;
     end
 end

@@ -1,4 +1,5 @@
 function lpl_process_single_tile_channel(raw_tile_file_name, tile_relative_path, input_root_path, p_map_root_path, landmarks_root_path, ...
+                                         ilastik_project_file_name, ...
                                          do_force_computation, do_run_in_debug_mode)                                    
     % Deal with args
     if ~exist('do_force_computation', 'var') || isempty(do_force_computation) ,
@@ -19,7 +20,7 @@ function lpl_process_single_tile_channel(raw_tile_file_name, tile_relative_path,
     % Shell out to run Ilastik
     if do_force_computation || ~exist(p_map_file_path, 'file') ,   
         ensure_folder_exists(p_map_tile_folder_path) ;
-        run_ilastik_on_stack(p_map_file_path, input_file_path) ;
+        run_ilastik_on_stack(p_map_file_path, input_file_path, ilastik_project_file_name) ;
     end
 
     % Generate the landmarks from the p-map

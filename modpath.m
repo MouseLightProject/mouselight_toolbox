@@ -2,7 +2,9 @@ function modpath()
     this_script_file_path = mfilename('fullpath') ;
     this_folder_path = fileparts(this_script_file_path) ;
     addpath(degit(genpath(fullfile(this_folder_path,'landmark-matching'))));
+    addpath(degit(genpath(fullfile(this_folder_path,'common'))));
     addpath(fullfile(this_folder_path,'foreground-classifiers')) ;
+    addpath(fullfile(this_folder_path,'stitching')) ;
     addpath(this_folder_path) ;
 end
 
