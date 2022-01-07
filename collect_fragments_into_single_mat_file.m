@@ -14,14 +14,14 @@ function collect_fragments_into_single_mat_file(sample_date)
     tree_count = length(frag_mat_file_names) ;
     fragments_from_tree_id = cell(1, tree_count) ;
     %tic_id = tic() ;
-    parfor_progress(tree_count) ;
+    pbo = progress_bar_object(tree_count) ;
     parfor tree_index = 1 : tree_count ,
         frag_mat_file_name = frag_mat_file_names{tree_index} ;
         frag_mat_file_path = fullfile(input_folder_path, frag_mat_file_name) ;
         fragments_from_tree_id{tree_index} = load_anonymous(frag_mat_file_path) ;
-        parfor_progress() ;
+        pbo.update() ;
     end
-    parfor_progress(0) ;
+    %pbo = progress_bar_object(0) ;
     %elapsed_time = toc(tic_id) ;
     %fprintf('Elapsed time to read in all fragment .mats was %g seconds\n', elapsed_time) ;
 

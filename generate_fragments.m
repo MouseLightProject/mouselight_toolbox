@@ -24,7 +24,7 @@ function generate_fragments(input_folder_path, ...
     full_trees_to_process_count = length(full_tree_file_names) ;
     %tic_id = tic() ;
     fprintf('Starting the fragment generation outer for loop, going to process %d full trees...\n', full_trees_to_process_count) ;
-    %parfor_progress(full_trees_to_process_count) ;
+    %pbo = progress_bar_object(full_trees_to_process_count) ;
     pbo = progress_bar_object(full_trees_to_process_count) ;
     for full_tree_index = 1 : full_trees_to_process_count ,
     %for full_tree_index = full_trees_to_process_count : -1 : 1 ,  % good for debugging, process small ones first to make sure loop body runs
@@ -40,9 +40,9 @@ function generate_fragments(input_folder_path, ...
         
         % Update the progress bar
         pbo.update(full_tree_index) ;
-        %parfor_progress() ;
+        %pbo.update() ;
     end
     pbo.finish_up() ;    
-    %parfor_progress(0) ;
+    %%pbo = progress_bar_object(0) ;
     %toc(tic_id) ;
 end

@@ -77,7 +77,7 @@ paireddesctemp{2}.X = [];
 paireddesctemp{2}.Y = [];
 %
 Ntiles = size(neigs,1);
-parfor_progress(Ntiles) ;
+pbo = progress_bar_object(Ntiles) ;
 parfor ineig = 1:Ntiles%Ntiles%find(neigs(:,1)==5463)%1:size(neigs,1)
     %% load descriptor pairs X (center) - Y (adjacent tile)
     idxcent = neigs(ineig,1);
@@ -153,6 +153,6 @@ parfor ineig = 1:Ntiles%Ntiles%find(neigs(:,1)==5463)%1:size(neigs,1)
     paireddescriptor{ineig}.ony.X = paireddescriptor_{2}.X;
     paireddescriptor{ineig}.ony.Y = paireddescriptor_{2}.Y;
     paireddescriptor{ineig}.count = [size(paireddescriptor_{1}.X,1) size(paireddescriptor_{2}.X,1)];
-    parfor_progress;
+    pbo.update() ;  %#ok<PFBNS>
 end
-parfor_progress(0);
+%pbo = progress_bar_object(0);

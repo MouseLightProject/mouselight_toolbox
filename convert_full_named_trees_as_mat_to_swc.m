@@ -7,7 +7,7 @@ function convert_full_named_trees_as_mat_to_swc(trees_as_swc_folder_path, trees_
     file_count = length(mat_file_names) ;
         
     fprintf('Converting %d trees as .mat to .swc...\n', file_count) ;
-    parfor_progress(file_count) ;
+    pbo = progress_bar_object(file_count) ;
     parfor i = 1 : file_count ,
         mat_file_name = mat_file_names{i} ;
         swc_base_name = base_name_from_file_name(mat_file_name) ;
@@ -19,9 +19,9 @@ function convert_full_named_trees_as_mat_to_swc(trees_as_swc_folder_path, trees_
             named_tree = mat_contents.named_tree ;
             save_named_tree_as_swc(swc_file_path, named_tree) ;
         end
-        parfor_progress() ;
+        pbo.update() ;
     end
-    parfor_progress(0) ;
+    %pbo = progress_bar_object(0) ;
     elapsed_time = toc(tic_id) ;
     fprintf('Elapsed time for convert_full_named_trees_as_mat_to_swc() was %g seconds\n', elapsed_time) ;
 end

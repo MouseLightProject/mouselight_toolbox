@@ -15,7 +15,7 @@ function generate_fragments_as_swcs(input_folder_path, ...
     full_trees_to_process_count = length(full_tree_file_names) ;
     tic_id = tic() ;
     fprintf('Starting the big parfor loop, going to process %d full trees...\n', full_trees_to_process_count) ;
-    parfor_progress(full_trees_to_process_count) ;
+    pbo = progress_bar_object(full_trees_to_process_count) ;
     for full_tree_index = 1 : full_trees_to_process_count ,
         full_tree_file_name = full_tree_file_names{full_tree_index} ;
         full_tree_mat_file_path = fullfile(input_folder_path, full_tree_file_name) ;
@@ -27,8 +27,8 @@ function generate_fragments_as_swcs(input_folder_path, ...
                                                    bounding_box_high_corner_xyz) ;
         
         % Update the progress bar
-        parfor_progress() ;
+        pbo.update() ;
     end
-    parfor_progress(0) ;
+    %pbo = progress_bar_object(0) ;
     toc(tic_id) ;
 end

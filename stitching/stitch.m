@@ -55,7 +55,7 @@ function stitch(tile_folder_path, ...
         is_matching_channel_index_set_explicitly = false ;
     else        
         is_matching_channel_index_set_explicitly = true ;
-        matching_channel_index = options.do_show_visualizations ;        
+        matching_channel_index = options.matching_channel_index ;        
     end    
     if ~isfield(options, 'does_use_new_style_z_match_file_names') || isempty(options.does_use_new_style_z_match_file_names) ,
         does_use_new_style_z_match_file_names = true ;

@@ -49,7 +49,7 @@ other_tile_relative_path_from_pair_index = other_tile_relative_path_from_pair_in
 
 % Run z point match on all tiles
 fprintf('Running z-point-matching on %d valid tile pairs...\n', pair_count) ;
-parfor_progress(pair_count) ;
+pbo = progress_bar_object(pair_count) ;
 parfor pair_index = 1 : pair_count ,
     center_tile_relative_path = central_tile_relative_path_from_pair_index{pair_index} ;
     other_tile_relative_path = other_tile_relative_path_from_pair_index{pair_index} ;
@@ -60,9 +60,9 @@ parfor pair_index = 1 : pair_count ,
                                   center_tile_relative_path, ...
                                   central_tile_ijk1, ...
                                   other_tile_relative_path)
-    parfor_progress() ;
+    pbo.update() ;
 end
-parfor_progress(0) ;
+%pbo = progress_bar_object(0) ;
 
 % Declare victory
 fprintf('Done running z-point-match for all tiles.\n') ;

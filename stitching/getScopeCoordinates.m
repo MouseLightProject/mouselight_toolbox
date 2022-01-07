@@ -43,25 +43,25 @@ input_file_count = length(inputfiles) ;
 gridix = cell(1,input_file_count) ;
 loc = cell(1,input_file_count) ;
 if is_sample_post_2016_04_04 ,
-    parfor_progress(input_file_count);
+    pbo = progress_bar_object(input_file_count);
     for ifile = 1:input_file_count
-        parfor_progress();
+        pbo.update();
         scvals = util.scopeparser(inputfiles{ifile});
         gridix{ifile} = [scvals.x scvals.y scvals.z scvals.cut_count];
         loc{ifile} = [scvals.x_mm scvals.y_mm scvals.z_mm];
     end
-    parfor_progress(0);
+    %pbo = progress_bar_object(0);
     raw_grids = cat(1,gridix{:});
     grids = shift_zs(raw_grids) ;  % sometimes there are z=0 or a z=-1 tiles, so we shift up to accomodate Matlab indexing
     locs = cat(1,loc{:});
 else
-    parfor_progress(input_file_count);
+    pbo = progress_bar_object(input_file_count);
     parfor ifile = 1:input_file_count
-        parfor_progress;
         scvals = scopeparser(inputfiles{ifile});
         loc{ifile} = [scvals.x_mm scvals.y_mm scvals.z_mm];
+        pbo.update() ; %#ok<PFBNS>
     end
-    parfor_progress(0);
+    %pbo = progress_bar_object(0);
     locs = cat(1,loc{:});
     locs_ = cat(1,loc{:});
     mins = min(locs_);

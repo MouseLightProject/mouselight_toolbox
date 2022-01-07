@@ -36,9 +36,8 @@ format = repmat('%f ',1,numCols);format(end)=[];
 % read descriptor files
 numtiles = length(scopeloc.filepath);
 desc = [];
-parfor_progress(numtiles);
+pbo = progress_bar_object(numtiles) ;
 parfor ii=1:numtiles
-    parfor_progress;
     for idxch = 1:length(desc_ch)
         %%read descriptors
         %[aa,bb,cc] = fileparts(scopeloc.relativepaths{ii});
@@ -61,8 +60,9 @@ parfor ii=1:numtiles
             desc(ii).value{idxch} = des0;
         end
     end
+    pbo.update() ; %#ok<PFBNS>
 end
-parfor_progress(0);
+%pbo = progress_bar_object(0);
 
 des = cell(1,numtiles);
 if length(desc_ch)==1

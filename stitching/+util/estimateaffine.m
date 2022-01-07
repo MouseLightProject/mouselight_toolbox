@@ -60,7 +60,7 @@ G = sparse(edges(:,1),edges(:,2),edges(:,3),Ntiles,Ntiles);
 G = max(G,G');
 
 %%
-%parfor_progress(Ntiles)
+%pbo = progress_bar_object(Ntiles)
 if old
     skipinds = any(isnan(neigs4(:,[4 5])),2);
 else
@@ -73,8 +73,8 @@ validthis = zeros(1,Ntiles);
 scopeparams = struct_with_shape_and_fields([1 Ntiles], {'imsize_um', 'dims', 'affinegl', 'affineglFC'}) ;
 
 %%
-%try; parfor_progress(0);catch;end
-parfor_progress(Ntiles) ;
+%try; %pbo = progress_bar_object(0);catch;end
+pbo = progress_bar_object(Ntiles) ;
 parfor itile = 1:Ntiles ,
 %for itile = Ntiles-2000:Ntiles ,
 %for itile = 16618:16619
@@ -188,8 +188,7 @@ parfor itile = 1:Ntiles ,
             scopeparams(itile).affineglFC = glSFC_;
         end
     end
-    parfor_progress() ;
+    pbo.update() ;  %#ok<PFBNS>
 end
-parfor_progress(0) ;
     
 end

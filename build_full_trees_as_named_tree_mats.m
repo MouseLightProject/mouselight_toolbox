@@ -99,7 +99,7 @@ components_to_process_serially_count = length(component_id_from_serial_will_proc
 components_to_process_in_parallel_count = length(component_id_from_parallel_will_process_index) ;
 
 fprintf('Starting the serial for loop, going to process %d components...\n', components_to_process_serially_count) ;
-parfor_progress(components_to_process_serially_count) ;
+pbo = progress_bar_object(components_to_process_serially_count) ;
 
 % Do the big ones in a regular for loop, since each requires a lot of
 % memory    
@@ -134,16 +134,16 @@ for process_serially_index = 1 : components_to_process_serially_count ,
     end
     
     % Update the progress bar
-    parfor_progress() ;
+    pbo.update() ;
 end
-parfor_progress(0) ;
+%pbo = progress_bar_object(0) ;
 
 
 % Do the small ones in a parfor loop, since memory is less of an issue
 % for them    
 fprintf('Starting the parallel for loop, will process %d components...\n', components_to_process_in_parallel_count) ;
 use_this_many_cores(maximum_core_count_desired) ;
-parfor_progress(components_to_process_in_parallel_count) ;
+pbo = progress_bar_object(components_to_process_in_parallel_count) ;
 component_from_component_id_as_parpool_constant = parallel.pool.Constant(component_from_component_id) ;
 skeleton_xyzs_as_parpool_constant = parallel.pool.Constant(skeleton_xyzs) ;
 A_as_parpool_constant = parallel.pool.Constant(A) ;
@@ -180,8 +180,8 @@ parfor process_in_parallel_index = 1 : components_to_process_in_parallel_count ,
     end
                                               
     % Update the progress bar
-    parfor_progress() ;
+    pbo.update() ;
 end    
-parfor_progress(0) ;
+%pbo = progress_bar_object(0) ;
 
 toc(runtic) ;

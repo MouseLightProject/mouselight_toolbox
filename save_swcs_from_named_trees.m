@@ -8,7 +8,7 @@ function save_swcs_from_named_trees(output_folder_path, ...
     end    
     
     % Write each fragment to disk as a .swc file
-    parfor_progress(tree_count) ;
+    pbo = progress_bar_object(tree_count) ;
     parfor tree_index = 1:tree_count ,
         % Create .swc file name
         tree_name = named_trees(tree_index).name ;
@@ -23,7 +23,7 @@ function save_swcs_from_named_trees(output_folder_path, ...
         % Get the centerpoints for this neuron
         tree = named_trees(tree_index) ;
         save_swc_from_named_tree(swc_file_path, tree) ;
-        parfor_progress() ;        
+        pbo.update() ;        
     end
-    parfor_progress(0) ;
+    %pbo = progress_bar_object(0) ;
 end

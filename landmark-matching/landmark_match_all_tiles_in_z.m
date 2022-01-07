@@ -73,7 +73,7 @@ function landmark_match_all_tiles_in_z( ...
         is_to_be_matched_from_pair_index = true(pair_count, 1) ;
     else
         is_to_be_matched_from_pair_index = true(pair_count,1) ;
-        parfor_progress(pair_count) ;
+        pbo = progress_bar_object(pair_count) ;
         parfor pair_index = 1 : pair_count
             central_tile_relative_path = central_tile_relative_path_from_pair_index{pair_index} ;
             channel_0_tile_file_name = sprintf('channel-%d-match-Z.mat', 0) ;
@@ -83,9 +83,9 @@ function landmark_match_all_tiles_in_z( ...
             is_to_be_matched = ...
                 ~(exist(channel_0_tile_file_path, 'file') && exist(channel_1_tile_file_path, 'file')) ;
             is_to_be_matched_from_pair_index(pair_index) = is_to_be_matched ;
-            parfor_progress() ;
+            pbo.update() ;
         end
-        parfor_progress(0) ;
+        %pbo = progress_bar_object(0) ;
     end
     fprintf('Done determining which of the %d eligible tiles need to be landmark-matched.\n', pair_count) ;
     pair_index_from_tile_to_be_matched_index = find(is_to_be_matched_from_pair_index) ;
@@ -97,7 +97,7 @@ function landmark_match_all_tiles_in_z( ...
 
     % Run z point match on all tiles
     fprintf('Running z-point-matching on %d tile pairs...\n', tile_to_be_matched_count) ;
-    parfor_progress(tile_to_be_matched_count) ;
+    pbo = progress_bar_object(tile_to_be_matched_count) ;
     parfor tile_to_be_matched_index = 1 : tile_to_be_matched_count ,
         center_tile_relative_path = central_tile_relative_path_from_tile_to_be_matched_index{tile_to_be_matched_index} ;
         other_tile_relative_path = other_tile_relative_path_from_tile_to_be_matched_index{tile_to_be_matched_index} ;
@@ -108,9 +108,9 @@ function landmark_match_all_tiles_in_z( ...
                                       center_tile_relative_path, ...
                                       central_tile_ijk1, ...
                                       other_tile_relative_path)
-        parfor_progress() ;
+        pbo.update() ;
     end
-    parfor_progress(0) ;
+    %pbo = progress_bar_object(0) ;
 
     % Declare victory
     fprintf('Done running z-point-match for all tiles.\n') ;

@@ -46,7 +46,7 @@ if do_force_computation ,
     is_to_be_run_from_tile_index = true(tile_count, 1) ;
 else
     is_to_be_run_from_tile_index = true(tile_count,1) ;
-    parfor_progress(tile_count) ;
+    pbo = progress_bar_object(tile_count) ;
     parfor tile_index = 1 : tile_count
         tile_relative_path = relative_path_from_tile_index{tile_index} ;
         channel_0_tile_file_name = landmark_file_name_from_tile_relative_path(tile_relative_path, 0) ;
@@ -56,9 +56,9 @@ else
         is_to_be_run = ...
             ~(exist(channel_0_tile_file_path, 'file') && exist(channel_1_tile_file_path, 'file')) ;
         is_to_be_run_from_tile_index(tile_index) = is_to_be_run ;
-        parfor_progress() ;
+        pbo.update() ;
     end
-    parfor_progress(0) ;
+    %pbo = progress_bar_object(0) ;
 end
 fprintf('Done determining which of the %d tiles need to be LPLed.\n', tile_count) ;
 tile_index_from_tile_to_be_run_index = find(is_to_be_run_from_tile_index) ;
@@ -74,7 +74,7 @@ tile_to_be_run_count = length(tile_index_from_tile_to_be_run_index)
 if do_use_bsub ,
     fprintf('Queueing LPL on %d tiles...\n', tile_to_be_run_count) ;
     bqueue = bqueue_type(do_actually_submit, max_running_slot_count) ;
-    parfor_progress(tile_to_be_run_count) ;
+    pbo = progress_bar_object(tile_to_be_run_count) ;
     for tile_to_be_run_index = 1 : tile_to_be_run_count ,
         tile_relative_path = relative_path_from_tile_to_be_run_index{tile_to_be_run_index} ;
         %output_folder_path = fullfile(line_fix_path, tile_relative_path) ;
@@ -90,9 +90,9 @@ if do_use_bsub ,
             do_line_fix, ...
             ilastik_project_file_name, ...
             do_force_computation) ;
-        parfor_progress() ;
+        pbo.update() ;
     end
-    parfor_progress(0) ;
+    %pbo = progress_bar_object(0) ;
     fprintf('Done queueing LPL on %d tiles.\n\n', tile_to_be_run_count) ;
     
     fprintf('LPLing queue on %d tiles...\n', length(bqueue.job_ids)) ;
@@ -106,7 +106,7 @@ if do_use_bsub ,
     successful_job_count = sum(job_statuses==1)
 else
     % Useful for debugging
-    parfor_progress(tile_to_be_run_count) ;
+    pbo = progress_bar_object(tile_to_be_run_count) ;
     for tile_to_be_run_index = 1 : tile_to_be_run_count ,
         tile_relative_path = relative_path_from_tile_to_be_run_index{tile_to_be_run_index} ;
         %output_folder_path = fullfile(line_fix_path, tile_relative_path) ;
@@ -121,9 +121,9 @@ else
             do_line_fix, ...
             ilastik_project_file_name, ...            
             do_force_computation) ;
-        parfor_progress() ;
+        pbo.update() ;
     end
-    parfor_progress(0) ;    
+    %pbo = progress_bar_object(0) ;    
 end
 
 

@@ -50,7 +50,7 @@ G = sparse(edges(:,1),edges(:,2),edges(:,3),Ntiles,Ntiles);
 G = max(G,G');
 
 %%
-parfor_progress(Ntiles) ;
+%pbo = progress_bar_object(Ntiles) ;
 if old
     skipinds = any(isnan(neigs4(:,[4 5])),2);
 else
@@ -209,5 +209,5 @@ end
 %     end
 %     parfor_progress;
 % end
-% parfor_progress(0);
+% %pbo = progress_bar_object(0);
 end

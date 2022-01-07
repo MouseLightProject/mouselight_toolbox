@@ -137,8 +137,7 @@ function [paired_descriptor_from_tile_index, curve_model_from_axis_index_from_ti
     %interiorTile_list = util.interior_tiles(scopeloc,1);
     
     %%
-    try parfor_progress(0);catch;end
-    parfor_progress(tile_count) ;
+    pbo = progress_bar_object(tile_count) ;
 
     if do_run_in_debug_mode ,
         for tile_index = 1:tile_count ,
@@ -166,7 +165,7 @@ function [paired_descriptor_from_tile_index, curve_model_from_axis_index_from_ti
                     [size(paired_descriptor_from_axis_index{1}.X,1) size(paired_descriptor_from_axis_index{2}.X,1)];
             end
             
-            parfor_progress;
+            pbo.update();
         end
     else
         parfor tile_index = 1:tile_count ,
@@ -194,10 +193,9 @@ function [paired_descriptor_from_tile_index, curve_model_from_axis_index_from_ti
                     [size(paired_descriptor_from_axis_index{1}.X,1) size(paired_descriptor_from_axis_index{2}.X,1)];
             end
             
-            parfor_progress;
+            pbo.update();  %#ok<PFBNS>
         end
     end
-    parfor_progress(0);
 end
 
 
