@@ -23,7 +23,7 @@ function compute_barycentric_landmark_match_errors(raw_tile_path, ...
         is_matching_channel_index_set_explicitly = false ;
     else
         is_matching_channel_index_set_explicitly = true ;
-        matching_channel_index = options.do_show_visualizations ;        
+        matching_channel_index = options.matching_channel_index ;        
     end    
     if ~isfield(options, 'manual_tile_shape_ijk') || isempty(options.manual_tile_shape_ijk) ,
         manual_tile_shape_ijk = [] ;
