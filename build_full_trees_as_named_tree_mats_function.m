@@ -92,7 +92,7 @@ function build_full_trees_as_named_tree_mats_function(sample_date, ...
             tree_mat_file_name = sprintf('%s.mat', tree_name) ;
             tree_mat_file_path = fullfile(output_folder_path, tree_mat_file_name);
             does_output_exist_from_processing_index(processing_index) = logical(exist(tree_mat_file_path, 'file')) ;
-            progress_bar.update(processing_index) ;
+            progress_bar.update() ;
         end    
     end
     component_id_from_will_process_index = component_id_from_processing_index(~does_output_exist_from_processing_index) ;

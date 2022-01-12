@@ -25,7 +25,7 @@ function generate_fragments_as_one_mat_per_tree(input_folder_path, ...
                                                  bounding_box_high_corner_xyz) ;
         
         % Update the progress bar
-        pbo.update() ;
+        pbo.update() ;  %#ok<PFBNS>
     end
     %pbo = progress_bar_object(0) ;
     toc(tic_id) ;

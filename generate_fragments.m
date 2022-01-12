@@ -39,8 +39,7 @@ function generate_fragments(input_folder_path, ...
                                            bounding_box_high_corner_xyz) ;
         
         % Update the progress bar
-        pbo.update(full_tree_index) ;
-        %pbo.update() ;
+        pbo.update() ;
     end
     pbo.finish_up() ;    
     %%pbo = progress_bar_object(0) ;

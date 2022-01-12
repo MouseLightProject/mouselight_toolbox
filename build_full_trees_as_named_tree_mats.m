@@ -75,7 +75,7 @@ else
         tree_mat_file_name = sprintf('%s.mat', tree_name) ;
         tree_mat_file_path = fullfile(output_folder_path, tree_mat_file_name);
         does_output_exist_from_processing_index(processing_index) = logical(exist(tree_mat_file_path, 'file')) ;
-        progress_bar.update(processing_index) ;
+        progress_bar.update() ;
     end    
 end
 component_id_from_will_process_index = component_id_from_processing_index(~does_output_exist_from_processing_index) ;
@@ -180,7 +180,7 @@ parfor process_in_parallel_index = 1 : components_to_process_in_parallel_count ,
     end
                                               
     % Update the progress bar
-    pbo.update() ;
+    pbo.update() ;  %#ok<PFBNS>
 end    
 %pbo = progress_bar_object(0) ;
 

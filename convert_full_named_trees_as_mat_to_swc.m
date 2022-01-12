@@ -19,7 +19,7 @@ function convert_full_named_trees_as_mat_to_swc(trees_as_swc_folder_path, trees_
             named_tree = mat_contents.named_tree ;
             save_named_tree_as_swc(swc_file_path, named_tree) ;
         end
-        pbo.update() ;
+        pbo.update() ; %#ok<PFBNS>
     end
     %pbo = progress_bar_object(0) ;
     elapsed_time = toc(tic_id) ;

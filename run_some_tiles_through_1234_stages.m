@@ -72,7 +72,7 @@ tile_to_be_run_count = length(tile_index_from_tile_to_be_run_index)
 
 % Create the bqueue
 if do_use_bsub ,
-    fprintf('Queueing LPL on %d tiles...\n', tile_to_be_run_count) ;
+    fprintf('Queueing LPL jobs for %d tiles...\n', tile_to_be_run_count) ;
     bqueue = bqueue_type(do_actually_submit, max_running_slot_count) ;
     pbo = progress_bar_object(tile_to_be_run_count) ;
     for tile_to_be_run_index = 1 : tile_to_be_run_count ,
@@ -93,15 +93,15 @@ if do_use_bsub ,
         pbo.update() ;
     end
     %pbo = progress_bar_object(0) ;
-    fprintf('Done queueing LPL on %d tiles.\n\n', tile_to_be_run_count) ;
+    fprintf('Done queueing LPL jobs for %d tiles.\n\n', tile_to_be_run_count) ;
     
-    fprintf('LPLing queue on %d tiles...\n', length(bqueue.job_ids)) ;
+    fprintf('Running queued LPL jobs for %d tiles...\n', length(bqueue.job_ids)) ;
     maximum_wait_time = inf ;
     do_show_progress_bar = true ;
     tic_id = tic() ;
     job_statuses = bqueue.run(maximum_wait_time, do_show_progress_bar) ;
     toc(tic_id)
-    fprintf('Done LPLing queue on %d tiles.\n', length(bqueue.job_ids)) ;
+    fprintf('Done running queued LPL jobs for %d tiles.\n', length(bqueue.job_ids)) ;
     job_statuses
     successful_job_count = sum(job_statuses==1)
 else

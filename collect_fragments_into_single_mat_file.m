@@ -19,7 +19,7 @@ function collect_fragments_into_single_mat_file(sample_date)
         frag_mat_file_name = frag_mat_file_names{tree_index} ;
         frag_mat_file_path = fullfile(input_folder_path, frag_mat_file_name) ;
         fragments_from_tree_id{tree_index} = load_anonymous(frag_mat_file_path) ;
-        pbo.update() ;
+        pbo.update() ; %#ok<PFBNS>
     end
     %pbo = progress_bar_object(0) ;
     %elapsed_time = toc(tic_id) ;

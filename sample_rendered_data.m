@@ -17,7 +17,7 @@ function [sample_stacks, sample_radius] = sample_rendered_data(sample_folder_pat
             sample_stack = get_mouselight_rendered_substack(sample_folder_path, 0, sample_offset, sample_shape) ;
             sample_index = last_sample_index + 1 ;
             sample_stacks(:,:,:,sample_index) = sample_stack ;
-            pbo.update(sample_index) ;
+            pbo.update() ;
             last_sample_index = sample_index ;
         catch err
             if isequal(err.identifier, 'mouselight:stackMustBeInOneChunk') ,                
