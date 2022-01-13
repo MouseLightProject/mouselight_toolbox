@@ -1,4 +1,7 @@
 function myplot3pp(varargin)
+    % Utility function for plotting points in 3D space
+    % This one is better about allowing caller to specify the target axes.
+    
     if ishghandle(varargin{1}) ,
         ax = varargin{1} ;
         pts = varargin{2} ;
