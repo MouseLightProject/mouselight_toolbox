@@ -9,7 +9,7 @@ function stitch_and_compute_match_errors(raw_tile_root_folder_path, ...
     % Deal with optional arguments
     if ~exist('options', 'var') || isempty(options) ,
         options = struct() ;
-    end    
+    end
     
 %     % Define various paths                                 
 %     tile_folder_path = sprintf('/groups/mousebrainmicro/mousebrainmicro/data/%s/Tiling', sample_tag)  %#ok<NOPRT>

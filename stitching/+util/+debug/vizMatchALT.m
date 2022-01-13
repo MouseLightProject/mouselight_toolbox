@@ -1,4 +1,4 @@
-function [Ic_m,It_m] = vizMatchALT(scopeloc,neigs,descriptors,ineig,pixshift,iadj,X,Y,X_,Y_)
+function [Ic_m, It_m] = vizMatchALT(scopeloc, neigs, descriptors, ineig, pixshift, iadj, X, Y, X_, Y_, matching_channel_index, sample_metadata)
     % scopeloc: Info about all the raw tiles, including file paths and location in the lattice
     % neigs: soemthing x 4 double array, first col is tile index, 2nd col is x+1 tile, 3rd col is y+1 col,
     %        4th col is z+1 col
@@ -17,17 +17,29 @@ function [Ic_m,It_m] = vizMatchALT(scopeloc,neigs,descriptors,ineig,pixshift,iad
     %     with other tile.
     % Y_: match_count x 3, xyz coords of fiducials in other tile for which matches have been found
     %     with central tile.  (I assume ordered to match up with points in X_.)
+    % matching_channel_index: The channel used for matching.  Images from this
+    %                         channel will be shown.  Usually 0 or 1.
+    % sample_metadata: A struct representing the sample_metadata.txt file for
+    %                  the sample.  Used to determine how to flip the imagery
+    %                  when debugging.
     
     persistent fig
     
     idxcent = neigs(ineig,1);
     idxadj = neigs(ineig,iadj+1);
     
-    channel_index = 1 ;
-    Ic = util.getTilefromId(scopeloc,idxcent, channel_index);
-    It = util.getTilefromId(scopeloc,idxadj, channel_index);
-    Ic_m = rot90(max(Ic,[],3),2);
-    It_m = rot90(max(It,[],3),2);
+    Ic = util.getTilefromId(scopeloc,idxcent, matching_channel_index);
+    It = util.getTilefromId(scopeloc,idxadj, matching_channel_index);
+    Ic_m = max(Ic,[],3) ;
+    It_m = max(It,[],3) ;
+    if sample_metadata.is_x_flipped ,
+        Ic_m = fliplr(Ic_m) ;
+        It_m = fliplr(It_m) ;
+    end
+    if sample_metadata.is_y_flipped ,
+        Ic_m = flipud(Ic_m) ;
+        It_m = flipud(It_m) ;
+    end
     dims = size(Ic);dims=dims([2 1 3]);
     %%
     %idxcent = neigs(ineig,1);

@@ -83,7 +83,7 @@ function landmark_match_all_tiles_in_z( ...
             is_to_be_matched = ...
                 ~(exist(channel_0_tile_file_path, 'file') && exist(channel_1_tile_file_path, 'file')) ;
             is_to_be_matched_from_pair_index(pair_index) = is_to_be_matched ;
-            pbo.update() ;
+            pbo.update() ; %#ok<PFBNS>
         end
         %pbo = progress_bar_object(0) ;
     end
@@ -108,7 +108,7 @@ function landmark_match_all_tiles_in_z( ...
                                       center_tile_relative_path, ...
                                       central_tile_ijk1, ...
                                       other_tile_relative_path)
-        pbo.update() ;
+        pbo.update() ; %#ok<PFBNS>
     end
     %pbo = progress_bar_object(0) ;
 

@@ -84,20 +84,12 @@ function stitch(tile_folder_path, ...
 
     % We use the background channel for finding matches, because the lipofuscin
     % granules show up better on that channel.
+    sample_metadata = read_sample_metadata_robustly(tile_folder_path) ;
+    background_channel_index = sample_metadata.background_channel_index ;
     if is_matching_channel_index_set_explicitly ,
         % do nothing
     else
-        try 
-            sample_metadata = read_sample_metadata_file(tile_folder_path) ;
-            %neuron_channel_index = sample_metadata.neuron_channel_index ;
-            background_channel_index = sample_metadata.background_channel_index ;
-        catch me        
-            if strcmp(me.identifier, 'read_file_into_cell_string:unable_to_open_file') ,            
-                [~, background_channel_index] = read_channel_semantics_file(tile_folder_path) ;
-            else
-                rethrow(me) ;
-            end
-        end
+        % Default to matching using the background channel
         matching_channel_index = background_channel_index ;
     end
     desc_ch = { sprintf('%d', matching_channel_index) } ;
@@ -162,7 +154,7 @@ function stitch(tile_folder_path, ...
         params.applyFC = do_perform_field_correction ;
         params.singleTile = 1;
         [curvemodel, scopeparams] = ...
-            estimate_field_curvature_for_all_tiles(scopeloc, landmark_folder_path, desc_ch, params) ;
+            estimate_field_curvature_for_all_tiles(scopeloc, landmark_folder_path, desc_ch, sample_metadata, params) ;
         fprintf('Done running field curvature stage.\n') ;
         % scopeparams contains the per-tile *linear* transforms
         save(scope_params_per_tile_file_path, 'scopeparams', 'curvemodel', 'params', '-v7.3') ;

@@ -1,4 +1,4 @@
-function [curvemodel, scopeparams] = estimate_field_curvature_for_all_tiles(scopeloc, descriptorfolder, desc_ch, params)
+function [curvemodel, scopeparams] = estimate_field_curvature_for_all_tiles(scopeloc, descriptorfolder, desc_ch, sample_metadata, params)
     if params.applyFC ,
         checkthese = [1 4 5 7];  % self - right - bottom - below
         neighbors = buildNeighbor(scopeloc.gridix(:,1:3)); %[id -x -y +x +y -z +z] format    
@@ -10,7 +10,8 @@ function [curvemodel, scopeparams] = estimate_field_curvature_for_all_tiles(scop
         fprintf('Loaded descriptors\n')
 
         % curvature estimation using descriptor match
-        [paireddescriptor_from_xy_match, curvemodel_from_xy_match] = match.xymatch(descriptors, neighbors(:,checkthese), scopeloc, params, model) ;
+        [paireddescriptor_from_xy_match, curvemodel_from_xy_match] = ...
+            match.xymatch(descriptors, neighbors(:,checkthese), scopeloc, params, model, sample_metadata, str2double(desc_ch)) ;
         fprintf('X&Y descriptor match done\n')
 
         % interpolate tiles with missing parameters from adjecent tiles

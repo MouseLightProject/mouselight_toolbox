@@ -54,7 +54,7 @@ function exitcode = pointmatch(tile1, tile2, acqusitionfolder1, acqusitionfolder
 
         % Save points for making the thumbnail
         X_for_all_channels = vertcat(X_for_all_channels, paireddescriptor.X) ;  %#ok<AGROW>
-        Y_for_all_channels = vertcat(Y_for_all_channels, paireddescriptor.Y) ;  %#ok<AGROW>
+        Y_for_all_channels = vertcat(Y_for_all_channels, paireddescriptor.Y) ;  %#ok<AGROW>        
     end
     
     % Synthesize and write a thumbnail image file
