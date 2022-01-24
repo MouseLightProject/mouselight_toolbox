@@ -2,7 +2,7 @@
 use_this_fraction_of_cores(1) ;
 
 % Set params for early jobs
-do_use_bsub = true ;
+do_use_bsub = ~do_run_in_debug_mode ;
 do_actually_submit = true ;
 max_running_slot_count = inf ;
 bsub_option_string = '-P mouselight -J mouselight-pipeline-123' ;
@@ -133,7 +133,7 @@ end
 %
 
 % New params for bjobs
-do_use_bsub = true ;
+do_use_bsub = ~do_run_in_debug_mode ;
 do_actually_submit = true ;
 max_running_slot_count = inf ;
 bsub_option_string = '-P mouselight -J mouselight-landmark-matching' ;
@@ -168,5 +168,6 @@ else
             sample_memo_folder_path, ...
             landmark_root_path, ...
             z_point_match_root_path, ...
-            do_force_computation) ;
+            do_force_computation, ...
+            do_run_in_debug_mode) ;
 end

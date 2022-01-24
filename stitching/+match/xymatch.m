@@ -242,7 +242,7 @@ function [did_succeed, curve_model_from_axis_index, paired_descriptor_from_axis_
         return
     end
     
-    central_tile_fiducials = util.correctTiles(central_tile_flipped_fiducials, dims) ;  % flip dimensions
+    central_tile_fiducials = correctTiles(central_tile_flipped_fiducials, dims) ;  % flip dimensions
        % ALT: I think this is because the fiducials are computed on the raw tile
        % stacks, which have to be flipped in x and y to get them into the proper
        % orientation for the rendered stack
@@ -264,7 +264,7 @@ function [did_succeed, curve_model_from_axis_index, paired_descriptor_from_axis_
         other_tile_raw_fiducials = double(other_tile_raw_fiducials_and_descriptors(:,1:3)); % descadj has x-y-z-w1-w2 format
         if size(other_tile_raw_fiducials,1)<3;continue;end
         
-        other_tile_fiducials = util.correctTiles(other_tile_raw_fiducials,dims);  % flip dimensions
+        other_tile_fiducials = correctTiles(other_tile_raw_fiducials,dims);  % flip dimensions
         um_shift_xyz = 1000*(scopeloc.loc(other_tile_index,:)-scopeloc.loc(central_tile_index,:)) ;    % um
         pixel_shift_ijk = round(um_shift_xyz.*(dims-1)./(imsize_um)) ;
         %other_tile_fiducials = other_tile_fiducials + ones(size(other_tile_fiducials,1),1)*pixel_shift ;  % shift with initial guess based on stage coordinate
@@ -331,8 +331,8 @@ function [did_succeed, curve_model_from_axis_index, paired_descriptor_from_axis_
         
         %%
         % flip back dimensions
-        flipped_fced_matched_central_tile_fiducials = util.correctTiles(fced_matched_central_tile_fiducials, dims) ;
-        flipped_fced_matched_other_tile_fiducials   = util.correctTiles(fced_matched_other_tile_fiducials  , dims) ;
+        flipped_fced_matched_central_tile_fiducials = correctTiles(fced_matched_central_tile_fiducials, dims) ;
+        flipped_fced_matched_other_tile_fiducials   = correctTiles(fced_matched_other_tile_fiducials  , dims) ;
         
         % store pairs
         curve_model_from_axis_index(axis_index,:) = curve_model ;

@@ -3,7 +3,8 @@ function landmark_match_all_tiles_in_z( ...
         sample_memo_folder_path, ...
         landmark_root_path, ...
         z_point_match_root_path, ...
-        do_force_computation)
+        do_force_computation, ...
+        do_run_in_debug_mode)
 
 
 %     % Build an index of the paths to raw tiles
@@ -33,7 +34,8 @@ function landmark_match_all_tiles_in_z( ...
     raw_tile_map_shape = size(tile_index_from_tile_ijk1)
     tile_count = length(relative_path_from_tile_index) 
 
-
+    % Read the sample metadata
+    sample_metadata = read_sample_metadata_robustly(raw_root_path) ;
 
     % 
     % Run stage 4 (landmark matching)
@@ -91,14 +93,13 @@ function landmark_match_all_tiles_in_z( ...
     pair_index_from_tile_to_be_matched_index = find(is_to_be_matched_from_pair_index) ;
     central_tile_relative_path_from_tile_to_be_matched_index = central_tile_relative_path_from_pair_index(is_to_be_matched_from_pair_index) ;
     other_tile_relative_path_from_tile_to_be_matched_index = other_tile_relative_path_from_pair_index(is_to_be_matched_from_pair_index) ;
-    central_tile_ijk1_from_tile_to_be_matched_index = central_tile_ijk1_from_pair_index(is_to_be_matched_from_pair_index) ;
+    central_tile_ijk1_from_tile_to_be_matched_index = central_tile_ijk1_from_pair_index(is_to_be_matched_from_pair_index, :) ;
     tile_to_be_matched_count = length(pair_index_from_tile_to_be_matched_index)
-
 
     % Run z point match on all tiles
     fprintf('Running z-point-matching on %d tile pairs...\n', tile_to_be_matched_count) ;
     pbo = progress_bar_object(tile_to_be_matched_count) ;
-    parfor tile_to_be_matched_index = 1 : tile_to_be_matched_count ,
+    for tile_to_be_matched_index = 1 : tile_to_be_matched_count ,
         center_tile_relative_path = central_tile_relative_path_from_tile_to_be_matched_index{tile_to_be_matched_index} ;
         other_tile_relative_path = other_tile_relative_path_from_tile_to_be_matched_index{tile_to_be_matched_index} ;
         central_tile_ijk1 = central_tile_ijk1_from_tile_to_be_matched_index(tile_to_be_matched_index, :) ;
@@ -107,7 +108,9 @@ function landmark_match_all_tiles_in_z( ...
                                       z_point_match_root_path, ...
                                       center_tile_relative_path, ...
                                       central_tile_ijk1, ...
-                                      other_tile_relative_path)
+                                      other_tile_relative_path, ...
+                                      sample_metadata, ...
+                                      do_run_in_debug_mode)
         pbo.update() ; %#ok<PFBNS>
     end
     %pbo = progress_bar_object(0) ;
@@ -115,5 +118,3 @@ function landmark_match_all_tiles_in_z( ...
     % Declare victory
     fprintf('Done running z-point-match for all tiles.\n') ;
 end
-
-

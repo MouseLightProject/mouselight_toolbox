@@ -5,6 +5,7 @@ function modpath()
     addpath(degit(genpath(fullfile(this_folder_path,'common'))));
     addpath(fullfile(this_folder_path,'foreground-classifiers')) ;
     addpath(fullfile(this_folder_path,'stitching')) ;
+    addpath(fullfile(this_folder_path,'rendering')) ;
     addpath(this_folder_path) ;
 end
 
