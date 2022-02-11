@@ -6,6 +6,7 @@ function modpath()
     addpath(fullfile(this_folder_path,'foreground-classifiers')) ;
     addpath(fullfile(this_folder_path,'stitching')) ;
     addpath(fullfile(this_folder_path,'rendering')) ;
+    run(fullfile(this_folder_path, 'tmt', 'modpath.m')) ;  % add tmt stuff to path
     addpath(this_folder_path) ;
 end
 
