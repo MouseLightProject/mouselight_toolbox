@@ -36,6 +36,11 @@ function stitch(tile_folder_path, ...
     else
         do_force_computations = options.do_force_computations ;
     end
+    if ~isfield(options, 'do_cold_stitch') || isempty(options.do_cold_stitch) ,
+        do_cold_stitch = false ;
+    else
+        do_cold_stitch = options.do_cold_stitch ;        
+    end
     if ~isfield(options, 'do_perform_field_correction') || isempty(options.do_perform_field_correction) ,
         do_perform_field_correction = true ;
     else
@@ -107,99 +112,108 @@ function stitch(tile_folder_path, ...
         save(scopeloc_file_path,'scopeloc','neighbors','experimentfolder') ;
     end
 
-    % Load z-plane matched landmarks
-    regpts_file_path = fullfile(stitching_output_folder_path,'regpts.mat') ;
-    if exist(regpts_file_path, 'file')  && ~do_force_computations ,
-        load(regpts_file_path, 'regpts') ;
+    % params
+    scopeacqparams = readScopeFile(fileparts(scopeloc.filepath{1}));
+    params = struct() ;
+    params.scopeacqparams = scopeacqparams;
+    params.imsize_um = [scopeacqparams.x_size_um scopeacqparams.y_size_um scopeacqparams.z_size_um];
+    params.overlap_um = [scopeacqparams.x_overlap_um scopeacqparams.y_overlap_um scopeacqparams.z_overlap_um];
+    params.imagesize = [1024 1536 251];
+    params.do_run_in_debug_mode = do_run_in_debug_mode ;
+    params.viz = do_show_visualizations ;
+    params.debug = 0;
+    params.Ndivs = 4;
+    params.Nlayer = 4;
+    params.htop = 5;
+    params.expensionratio = 1;
+    params.order = 1;
+    params.applyFC = do_perform_field_correction ;
+    params.singleTile = 1;
+    
+    % If a normal stitch, load z-face matches, field correction params, etc
+    if do_cold_stitch ,    
+        regpts = [] ;
+        scopeparams = [] ;
+        curvemodel = [] ;
     else
-        % load finished tile matches. find badly matched or missing tile pairs
-        [regpts, featmap] = loadMatchedFeaturesNewZ(scopeloc, match_folder_path, matching_channel_index, [], does_use_new_style_z_match_file_names) ;    
-        save(regpts_file_path, '-v7.3', 'regpts', 'featmap')
-    end
-
-    % Compute some stats about the number of z-plane matches
-    z_match_count_from_tile_index = cellfun(@(s)(size(s.X,1)), regpts) ;  % is length() what I want here?
-    mean_z_match_count = mean(z_match_count_from_tile_index) 
-    median_z_match_count = median(z_match_count_from_tile_index) 
-    min_z_match_count = min(z_match_count_from_tile_index) 
-    max_z_match_count = max(z_match_count_from_tile_index) 
-    if max_z_match_count == 0 ,
-        fprintf('There may be a problem: None of the tile pairs have any z-matches!  Going to proceed anyway...\n') ;
+        % Load z-plane matched landmarks
+        regpts_file_path = fullfile(stitching_output_folder_path,'regpts.mat') ;
+        if exist(regpts_file_path, 'file')  && ~do_force_computations ,
+            load(regpts_file_path, 'regpts') ;
+        else
+            % load finished tile matches. find badly matched or missing tile pairs
+            [regpts, featmap] = loadMatchedFeaturesNewZ(scopeloc, match_folder_path, matching_channel_index, [], does_use_new_style_z_match_file_names) ;
+            save(regpts_file_path, '-v7.3', 'regpts', 'featmap')
+        end
+        
+        % Compute some stats about the number of z-plane matches
+        z_match_count_from_tile_index = cellfun(@(s)(size(s.X,1)), regpts) ;  % is length() what I want here?
+        mean_z_match_count = mean(z_match_count_from_tile_index)
+        median_z_match_count = median(z_match_count_from_tile_index)
+        min_z_match_count = min(z_match_count_from_tile_index)
+        max_z_match_count = max(z_match_count_from_tile_index)
+        if max_z_match_count == 0 ,
+            fprintf('There may be a problem: None of the tile pairs have any z-matches!  Going to proceed anyway...\n') ;
+        end
+        
+        % Scope field curvature estimation
+        % i) Finds matches on x&y
+        % ii) Finds field curvature based on matched points
+        % iii) Creates a 3D linear transform by jointly solving a linear system of
+        %      equations
+        scope_params_per_tile_file_path = fullfile(stitching_output_folder_path,'scopeparams_pertile.mat') ;
+        if exist(scope_params_per_tile_file_path, 'file') && ~do_force_computations ,
+            load(scope_params_per_tile_file_path, 'scopeparams', 'curvemodel', 'params') ;
+        else
+            fprintf('Running field curvature stage...\n') ;
+            [curvemodel, scopeparams] = ...
+                estimate_field_curvature_for_all_tiles(scopeloc, landmark_folder_path, desc_ch, sample_metadata, params) ;
+            fprintf('Done running field curvature stage.\n') ;
+            % scopeparams contains the per-tile *linear* transforms
+            save(scope_params_per_tile_file_path, 'scopeparams', 'curvemodel', 'params', '-v7.3') ;
+        end
+        
+        % Make a video
+        descriptor_match_quality_video_file_path = fullfile(stitching_output_folder_path, 'descriptor-match-quality.avi') ;
+        if ~exist(descriptor_match_quality_video_file_path, 'file') && ~do_force_computations ,
+            fprintf('Making descriptorMatchQuality video...\n') ;
+            %load(scope_params_per_tile_file_path,'scopeparams')
+            descriptorMatchQuality(regpts,scopeparams,scopeloc,descriptor_match_quality_video_file_path)
+            % createThumb(regpts,scopeparams,scopeloc,video_file_path)
+            % descriptorMatchQualityHeatMap(regpts,scopeparams{end},scopeloc,video_file_path)
+            % descriptorMatchQualityHeatMap_forPaper(regpts,scopeparams{end},scopeloc,video_file_path)
+            fprintf('Done making descriptorMatchQuality video.\n') ;
+        end
+        
+        %     % Make thumbnails showing tile overlap, posibly ofther info
+        %     create_thumb_video_file_path = fullfile(stitching_output_folder_path, 'thumb.avi') ;
+        %     if ~exist(create_thumb_video_file_path, 'file') ,
+        %         fprintf('Making createThumb video...\n') ;
+        %         createThumb(regpts,scopeparams,scopeloc,create_thumb_video_file_path)
+        %         fprintf('Done making createThumb video.\n') ;
+        %     end
+        
+        % Make a heatmap of some sort
+        try
+            descriptor_match_quality_heatmap_video_file_path = fullfile(stitching_output_folder_path, 'descriptor-match-quality-heatmap.avi') ;
+            if ~exist(descriptor_match_quality_heatmap_video_file_path, 'file') && ~do_force_computations ,
+                fprintf('Making descriptorMatchQualityHeatMap video...\n') ;
+                descriptorMatchQualityHeatMap(regpts,scopeparams,scopeloc,descriptor_match_quality_heatmap_video_file_path) ;
+                fprintf('Done making descriptorMatchQualityHeatMap video.\n') ;
+            end
+        catch e  % MException struct
+            fprintf('descriptorMatchQualityHeatMap video failed:%s\n',e.identifier);
+            fprintf('descriptorMatchQualityHeatMap video failed:%s\n',e.message);
+        end    
     end
     
-    % Scope field curvature estimation
-    % i) Finds matches on x&y
-    % ii) Finds field curvature based on matched points
-    % iii) Creates a 3D linear transform by jointly solving a linear system of
-    %      equations
-    scope_params_per_tile_file_path = fullfile(stitching_output_folder_path,'scopeparams_pertile.mat') ;
-    if exist(scope_params_per_tile_file_path, 'file') && ~do_force_computations ,   
-        load(scope_params_per_tile_file_path, 'scopeparams', 'curvemodel', 'params') ;
-    else 
-        fprintf('Running field curvature stage...\n') ;
-        scopeacqparams = readScopeFile(fileparts(scopeloc.filepath{1}));        
-        params = struct() ;
-        params.scopeacqparams = scopeacqparams;
-        params.imsize_um = [scopeacqparams.x_size_um scopeacqparams.y_size_um scopeacqparams.z_size_um];
-        params.overlap_um = [scopeacqparams.x_overlap_um scopeacqparams.y_overlap_um scopeacqparams.z_overlap_um];
-        params.imagesize = [1024 1536 251];
-        params.do_run_in_debug_mode = do_run_in_debug_mode ;
-        params.viz = do_show_visualizations ;
-        params.debug = 0;
-        params.Ndivs = 4;
-        params.Nlayer = 4;
-        params.htop = 5;
-        params.expensionratio = 1;
-        params.order = 1;
-        params.applyFC = do_perform_field_correction ;
-        params.singleTile = 1;
-        [curvemodel, scopeparams] = ...
-            estimate_field_curvature_for_all_tiles(scopeloc, landmark_folder_path, desc_ch, sample_metadata, params) ;
-        fprintf('Done running field curvature stage.\n') ;
-        % scopeparams contains the per-tile *linear* transforms
-        save(scope_params_per_tile_file_path, 'scopeparams', 'curvemodel', 'params', '-v7.3') ;
-    end
-
-    % Make a video
-    descriptor_match_quality_video_file_path = fullfile(stitching_output_folder_path, 'descriptor-match-quality.avi') ;
-    if ~exist(descriptor_match_quality_video_file_path, 'file') && ~do_force_computations ,
-        fprintf('Making descriptorMatchQuality video...\n') ;
-        %load(scope_params_per_tile_file_path,'scopeparams')
-        descriptorMatchQuality(regpts,scopeparams,scopeloc,descriptor_match_quality_video_file_path)
-        % createThumb(regpts,scopeparams,scopeloc,video_file_path)
-        % descriptorMatchQualityHeatMap(regpts,scopeparams{end},scopeloc,video_file_path)
-        % descriptorMatchQualityHeatMap_forPaper(regpts,scopeparams{end},scopeloc,video_file_path)
-        fprintf('Done making descriptorMatchQuality video.\n') ;
-    end
-
-%     % Make thumbnails showing tile overlap, posibly ofther info
-%     create_thumb_video_file_path = fullfile(stitching_output_folder_path, 'thumb.avi') ;
-%     if ~exist(create_thumb_video_file_path, 'file') ,
-%         fprintf('Making createThumb video...\n') ;
-%         createThumb(regpts,scopeparams,scopeloc,create_thumb_video_file_path)
-%         fprintf('Done making createThumb video.\n') ;
-%     end
-
-    % Make a heatmap of some sort
-    try
-        descriptor_match_quality_heatmap_video_file_path = fullfile(stitching_output_folder_path, 'descriptor-match-quality-heatmap.avi') ;
-        if ~exist(descriptor_match_quality_heatmap_video_file_path, 'file') && ~do_force_computations ,
-            fprintf('Making descriptorMatchQualityHeatMap video...\n') ;
-            descriptorMatchQualityHeatMap(regpts,scopeparams,scopeloc,descriptor_match_quality_heatmap_video_file_path) ;
-            fprintf('Done making descriptorMatchQualityHeatMap video.\n') ;
-        end
-    catch e  % MException struct
-        fprintf('descriptorMatchQualityHeatMap video failed:%s\n',e.identifier);
-        fprintf('descriptorMatchQualityHeatMap video failed:%s\n',e.message);
-    end   
-
     % Compute the 3D vector field
     vecfield3D_file_path = fullfile(stitching_output_folder_path,'vecfield3D.mat') ;
     if exist(vecfield3D_file_path, 'file') && ~do_force_computations ,
         load(vecfield3D_file_path, 'vecfield3D', 'params') ;
     else
         fprintf('Running vectorField3D stage...\n') ;
-        vecfield3D = vectorField3D(params, scopeloc, regpts, scopeparams, curvemodel, []) ;
+        vecfield3D = vectorField3D(params, scopeloc, do_cold_stitch, regpts, scopeparams, curvemodel) ;
         save(vecfield3D_file_path, 'vecfield3D', 'params') ;
     end
     
@@ -210,7 +224,9 @@ function stitch(tile_folder_path, ...
     targetidx = 1:size(scopeloc.gridix,1) ;
     outfile = fullfile(stitching_output_folder_path,'tilebase.cache.yml') ;
     if ~exist(outfile, 'file') ,
+        fprintf('Writing tilebase YAML file...\n') ;
         writeYML(outfile, targetidx, vecfield3D, big, ymldims, root) ;
+        fprintf('Done writing tilebase YAML file.\n') ;
     end
 
     % Declare victory

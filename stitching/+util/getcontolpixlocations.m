@@ -1,10 +1,9 @@
-function [st,ed] = getcontolpixlocations(scopeloc, params, scopeparams)
+function [st,ed] = getcontolpixlocations(scopeloc, params)
     gridix = scopeloc.gridix ;
     loc = scopeloc.loc ;
     dims = params.imagesize ;
-    scopeparams1 = scopeparams(1) ;
-    imsize_um = scopeparams1.imsize_um ;
-    scopeparams1dims = scopeparams1.dims ;
+    imsize_um = params.imsize_um ;
+    scopeparams1dims = params.imagesize ;
     targetoverlap_um = 4*[5 5 5]; %in um
     N = params.Ndivs;
     gridix_xyz = gridix(:,1:3) ;
