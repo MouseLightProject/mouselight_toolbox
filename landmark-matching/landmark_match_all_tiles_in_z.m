@@ -6,7 +6,6 @@ function landmark_match_all_tiles_in_z( ...
         do_force_computation, ...
         do_run_in_debug_mode)
 
-
 %     % Build an index of the paths to raw tiles
 %     sample_date = '2021-09-16' ;
 %     script_folder_path = fileparts(mfilename('fullpath')) ;

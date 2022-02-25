@@ -1,4 +1,4 @@
-function check_tiles(sample_date_as_string, do_show_progress)
+function check_some_tiles(sample_date_as_string, relative_path_from_subset_tile_index, do_show_progress)
     if ~exist('do_show_progress', 'var') || isempty(do_show_progress) ,
         do_show_progress = false ;
     end
@@ -14,14 +14,14 @@ function check_tiles(sample_date_as_string, do_show_progress)
     
     % Build the tile index
     sample_memo_folder_path = sprintf('/groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/%s', sample_date_as_string) ;    
-    raw_tile_index = compute_or_read_from_memo(sample_memo_folder_path, ...
+    tile_index = compute_or_read_from_memo(sample_memo_folder_path, ...
                                                'raw-tile-index', ...
                                                @()(build_raw_tile_index(raw_tile_root_path)), ...
                                                false) ;
-    tile_index_from_tile_ijk1 = raw_tile_index.tile_index_from_tile_ijk1 ;
-    ijk1_from_tile_index = raw_tile_index.ijk1_from_tile_index ;
+    tile_index_from_tile_ijk1 = tile_index.tile_index_from_tile_ijk1 ;
+    ijk1_from_tile_index = tile_index.ijk1_from_tile_index ;
     %xyz_from_tile_index = raw_tile_index.xyz_from_tile_index ;
-    relative_path_from_tile_index = raw_tile_index.relative_path_from_tile_index ;
+    relative_path_from_tile_index = tile_index.relative_path_from_tile_index ;
     raw_tile_map_shape = size(tile_index_from_tile_ijk1)
     raw_tile_count = length(relative_path_from_tile_index) ;
     
@@ -31,6 +31,14 @@ function check_tiles(sample_date_as_string, do_show_progress)
         error('There are no raw tiles!') ;
     end
 
+    % Find the tiles to be checked within the tile index
+    [is_in_tile_index_from_subset_tile_index, tile_index_from_subset_tile_index] = ...
+        ismember(relative_path_from_subset_tile_index, relative_path_from_tile_index) ;    
+    if ~all(is_in_tile_index_from_subset_tile_index) ,
+        error('Some subset tiles do not seem to be in the tile index') ;
+    end
+    subset_tile_count = length(relative_path_from_subset_tile_index)
+    
     % Paths to all the pipeline outputs
     pipeline_output_folder_path_template_from_stage_index = {raw_tile_root_path_template, ...
                                                     '/nrs/mouselight/pipeline_output/%s/stage_1_line_fix_output', ...
@@ -66,10 +74,11 @@ function check_tiles(sample_date_as_string, do_show_progress)
         fprintf('\n')
         fprintf('Checking stage %s...\n', stage_name) ;
         if do_show_progress , 
-            progress_bar = progress_bar_object(raw_tile_count) ;
+            progress_bar = progress_bar_object(subset_tile_count) ;
         end
-        for raw_tile_index = 1 : raw_tile_count ,
-            raw_tile_folder_relative_path = relative_path_from_tile_index{raw_tile_index} ;
+        for subsset_tile_index = 1 : subset_tile_count ,
+            tile_index = tile_index_from_subset_tile_index(subsset_tile_index) ;
+            raw_tile_folder_relative_path = relative_path_from_tile_index{tile_index} ;
             [~,leaf_folder_name] = fileparts2(raw_tile_folder_relative_path) ;
             if isequal(stage_name, 'classifier') ,
                 putative_stage_output_tile_file_name_template = sprintf('%s-prob.%%d.h5', leaf_folder_name) ;
@@ -121,7 +130,7 @@ function check_tiles(sample_date_as_string, do_show_progress)
                     else
                         if strcmp(stage_name, 'point-match') ,
                             % It might still be ok, if there's no z+1 tile for this tile
-                            tile_ijk1 = ijk1_from_tile_index(raw_tile_index,:) ;
+                            tile_ijk1 = ijk1_from_tile_index(tile_index,:) ;
                             neighbor_tile_ijk1 = tile_ijk1 + [0 0 1] ;
                             if all( 1<=neighbor_tile_ijk1 & neighbor_tile_ijk1<=raw_tile_map_shape ) ,
                                 % the neighbor tile is in-bounds
