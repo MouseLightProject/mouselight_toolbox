@@ -52,8 +52,12 @@ function visualize_xy_matching_after_loading_stacks_and_flipping(...
     flipped_other_tile_landmark_ijks_and_descriptors = descriptors{other_tile_index};
     
     % Flip the stacks as needed
-    central_tile_stack_jik = unflip_stack_as_needed(maybe_flipped_central_tile_stack_jik, sample_metadata) ;
-    other_tile_stack_jik = unflip_stack_as_needed(maybe_flipped_other_tile_stack_jik, sample_metadata) ;
+    central_tile_path = scopeloc.filepath{central_tile_index};
+    other_tile_path = scopeloc.filepath{other_tile_index};    
+    central_tile_flip_metadata = get_tile_flip_state(central_tile_path, sample_metadata) ;
+    central_tile_stack_jik = unflip_stack_as_needed(maybe_flipped_central_tile_stack_jik, central_tile_flip_metadata) ;
+    other_tile_flip_metadata = get_tile_flip_state(other_tile_path, sample_metadata) ;    
+    other_tile_stack_jik = unflip_stack_as_needed(maybe_flipped_other_tile_stack_jik, other_tile_flip_metadata) ;
     
     % Get the stack shape, needed by correctTiles() below
     stack_shape_jik = size(central_tile_stack_jik);  % like yxz, but in pixels

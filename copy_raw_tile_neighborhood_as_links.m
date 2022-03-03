@@ -1,8 +1,8 @@
-function copy_raw_tile_neighborhood(hood_raw_tile_root_folder_path, ...
-                                    raw_tile_root_folder_path, ...
-                                    center_tile_relative_path, ...
-                                    sample_memo_folder_path, ...
-                                    do_force_computation)
+function copy_raw_tile_neighborhood_as_links(hood_raw_tile_root_folder_path, ...
+                                             raw_tile_root_folder_path, ...
+                                             center_tile_relative_path, ...
+                                             sample_memo_folder_path, ...
+                                             do_force_computation)
     % Build the full tile index
     raw_tile_index = compute_or_read_from_memo(sample_memo_folder_path, ...
                                                'raw-tile-index', ...
@@ -27,19 +27,19 @@ function copy_raw_tile_neighborhood(hood_raw_tile_root_folder_path, ...
                                 center_tile_relative_path) ; %#ok<ASGLU>
     tile_count = length(relative_path_from_tile_index) ;
 
-    % For each relative path, make a copy
+    % For each relative path, make a link
     for tile_index = 1 : tile_count ,
         tile_relative_path = relative_path_from_tile_index{tile_index} ;
         destination_path = fullfile(hood_raw_tile_root_folder_path, tile_relative_path) ;
         source_path = fullfile(raw_tile_root_folder_path, tile_relative_path) ;
         destination_parent_path = fileparts(destination_path) ;
         ensure_folder_exists(destination_parent_path) ;
-        system_from_list_with_error_handling({'cp', '-R', '-T', source_path, destination_path}) ;
+        system_from_list_with_error_handling({'ln', '-s', '-T', source_path, destination_path}) ;
     end
     
-    % Make copies for the metadata, etc
+    % Make links for the metadata, etc
     file_name = 'sample-metadata.txt' ;
     source_path = fullfile(raw_tile_root_folder_path, file_name) ;
     destination_path = fullfile(hood_raw_tile_root_folder_path, file_name) ;
-    system_from_list_with_error_handling({'cp', '-T', source_path, destination_path}) ;    
+    system_from_list_with_error_handling({'ln', '-s', '-T', source_path, destination_path}) ;    
 end

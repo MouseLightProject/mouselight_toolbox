@@ -56,8 +56,10 @@ function visualize_z_matching_after_loading_stacks_and_flipping(...
 %     flipped_other_tile_landmark_ijks_and_descriptors = descriptors{other_tile_index};
     
     % Flip the stacks as needed
-    central_tile_stack_jik = unflip_stack_as_needed(maybe_flipped_central_tile_stack_jik, sample_metadata) ;
-    other_tile_stack_jik = unflip_stack_as_needed(maybe_flipped_other_tile_stack_jik, sample_metadata) ;
+    central_tile_flip_metadata = get_tile_flip_state(central_tile_raw_file_path, sample_metadata) ;
+    other_tile_flip_metadata = get_tile_flip_state(other_tile_raw_file_path, sample_metadata) ;
+    central_tile_stack_jik = unflip_stack_as_needed(maybe_flipped_central_tile_stack_jik, central_tile_flip_metadata) ;
+    other_tile_stack_jik = unflip_stack_as_needed(maybe_flipped_other_tile_stack_jik, other_tile_flip_metadata) ;
     
     % Get the stack shape, needed by correctTiles() below
     stack_shape_jik = size(central_tile_stack_jik);  % like yxz, but in pixels
@@ -88,12 +90,12 @@ end
 
 
 
-function result = unflip_stack_as_needed(maybe_flipped_stack_jik, sample_metadata)
+function result = unflip_stack_as_needed(maybe_flipped_stack_jik, tile_flip_metadata)
     result = maybe_flipped_stack_jik ;
-    if sample_metadata.is_x_flipped ,
+    if tile_flip_metadata.is_x_flipped ,
         result = fliplr(result) ;
     end
-    if sample_metadata.is_y_flipped ,
+    if tile_flip_metadata.is_y_flipped ,
         result = flipud(result) ;
     end    
 end

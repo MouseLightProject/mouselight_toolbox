@@ -13,7 +13,8 @@ function updated_state = build_tile_index_dirwalk_callback(root_folder_absolute_
         [~,file_base_name] = fileparts2(current_folder_relative_path) ;
         acquisition_file_name = [file_base_name '-ngc.acquisition'] ;
         acquisition_file_path = fullfile(root_folder_absolute_path, current_folder_relative_path, acquisition_file_name) ;
-        if exist(acquisition_file_path, 'file') ,
+        if ismember(acquisition_file_name, file_names) ,
+        %if exist(acquisition_file_path, 'file') ,  % don't hit the FS again
             [ijk1, xyz] = read_lattice_position_from_acquisition_file(acquisition_file_path) ;
             updated_state = struct() ;
             updated_state.ijk1_from_tile_index = [state.ijk1_from_tile_index ; ijk1] ;

@@ -1,4 +1,4 @@
-function [rounded_shift, shift] = find_shift(stack, min_shift, max_shift, do_3d, do_run_in_debug_mode)
+function [rounded_shift, shift] = determine_line_shift_core(stack, min_shift, max_shift, do_3d, do_run_in_debug_mode)
     if do_3d ,
         im1 = double(stack(1:2:end,:,:)) ;
         im2 = double(stack(2:2:end,:,:)) ;

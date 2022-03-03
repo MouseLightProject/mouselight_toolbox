@@ -8,4 +8,5 @@ parfor_progress.txt
 *.stdouterr
 foreground-classifiers/data/
 foreground-classifiers/2021-03-17/
+RESTORED/
 
