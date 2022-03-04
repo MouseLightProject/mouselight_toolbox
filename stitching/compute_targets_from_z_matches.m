@@ -108,6 +108,8 @@ function [targets_from_tile_index, cpg_k0_values_from_tile_index, tile_k_from_ru
         % try to make the matched pairs each go to the same point.
         is_anchor_from_layer_tile_index = is_anchor_from_tile_index(tile_index_from_layer_tile_index) ;
         tile_index_from_layer_anchor_index = tile_index_from_layer_tile_index(is_anchor_from_layer_tile_index) ;
+        tile_shape_ijk = params.imagesize ;  % tile shape, in xyz order (traditionally [1024 1536 251])
+        order = params.order ;  % order of the field curvature model, I think
         for tile_index = tile_index_from_layer_anchor_index ,
             neighbor_tile_index = tileneighbors(tile_index, 7) ;  % the z+1 tile
 
