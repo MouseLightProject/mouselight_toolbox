@@ -5,11 +5,18 @@ function check_tiles(sample_date_as_string, do_show_progress)
     
     % Determine where the raw tiles are
     raw_tile_root_path_template = '/groups/mousebrainmicro/mousebrainmicro/data/%s/Tiling' ;
-    raw_tile_root_path = sprintf(raw_tile_root_path_template, sample_date_as_string) ;
+    raw_tile_root_path_1 = sprintf(raw_tile_root_path_template, sample_date_as_string) ;
     % Sometimes they use a "Tiling" folder, sometimes not...
-    if ~exist(raw_tile_root_path, 'file') ,
-        raw_tile_root_path_template = '/groups/mousebrainmicro/mousebrainmicro/data/acquisition/%s' ;
-        raw_tile_root_path = sprintf(raw_tile_root_path_template, sample_date_as_string) ;
+    if exist(raw_tile_root_path_1, 'file') ,
+        raw_tile_root_path = raw_tile_root_path_1 ;
+    else
+        raw_tile_root_path_template = '/groups/mousebrainmicro/mousebrainmicro/data/%s' ;
+        raw_tile_root_path_2 = sprintf(raw_tile_root_path_template, sample_date_as_string) ;
+        if exist(raw_tile_root_path_2, 'file') ,
+            raw_tile_root_path = raw_tile_root_path_2 ;            
+        else
+            error('Neither %s nor %s exists', raw_tile_root_path_1, raw_tile_root_path_2) ;
+        end
     end
     
     % Build the tile index

@@ -28,6 +28,9 @@ function result = build_raw_tile_index(raw_tiles_path, manual_tile_shape_ijk)
     xyz_from_tile_index = index_as_struct.xyz_from_tile_index ;
     relative_path_from_tile_index = index_as_struct.relative_path_from_tile_index ;
     tile_count = length(relative_path_from_tile_index) ;
+    if tile_count==0 ,
+        error('Found zero tiles!') ;
+    end
     
     % Shift the lattice coordinates so the lowest one in the bounding cuboid is [1 1 1]
     min_raw_tile_ijk1 = min(raw_tile_ijk1_from_tile_index, [], 1) ;
