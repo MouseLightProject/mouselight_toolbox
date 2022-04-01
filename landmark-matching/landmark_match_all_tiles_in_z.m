@@ -98,7 +98,7 @@ function landmark_match_all_tiles_in_z( ...
     % Run z point match on all tiles
     fprintf('Running z-point-matching on %d tile pairs...\n', tile_to_be_matched_count) ;
     pbo = progress_bar_object(tile_to_be_matched_count) ;
-    for tile_to_be_matched_index = 1 : tile_to_be_matched_count ,
+    parfor tile_to_be_matched_index = 1 : tile_to_be_matched_count ,
         center_tile_relative_path = central_tile_relative_path_from_tile_to_be_matched_index{tile_to_be_matched_index} ;
         other_tile_relative_path = other_tile_relative_path_from_tile_to_be_matched_index{tile_to_be_matched_index} ;
         central_tile_ijk1 = central_tile_ijk1_from_tile_to_be_matched_index(tile_to_be_matched_index, :) ;

@@ -18,7 +18,7 @@ ijk1_from_tile_index = raw_tile_index.ijk1_from_tile_index ;
 %xyz_from_tile_index = raw_tile_index.xyz_from_tile_index ;
 relative_path_from_tile_index = raw_tile_index.relative_path_from_tile_index ;
 %raw_tile_map_shape = size(tile_index_from_tile_ijk1)
-tile_count = length(relative_path_from_tile_index) 
+tile_count = length(relative_path_from_tile_index)  %#ok<NOPTS>
 
 
 
@@ -43,15 +43,15 @@ else
         is_to_be_run = ...
             ~(exist(channel_0_tile_file_path, 'file') && exist(channel_1_tile_file_path, 'file')) ;
         is_to_be_run_from_tile_index(tile_index) = is_to_be_run ;
-        pbo.update() ;
+        pbo.update() ;  %#ok<PFBNS>
     end
     %pbo = progress_bar_object(0) ;
 end
 fprintf('Done determining which of the %d tiles need to be LPLed.\n', tile_count) ;
 tile_index_from_tile_to_be_run_index = find(is_to_be_run_from_tile_index) ;
 relative_path_from_tile_to_be_run_index = relative_path_from_tile_index(is_to_be_run_from_tile_index) ;
-tile_to_be_run_count = length(tile_index_from_tile_to_be_run_index)
-
+tile_to_be_run_count = length(tile_index_from_tile_to_be_run_index)  %#ok<NOPTS>
+ 
 
 %
 % Run stages 123 on all tiles
@@ -89,8 +89,7 @@ if do_use_bsub ,
     job_statuses = bqueue.run(maximum_wait_time, do_show_progress_bar) ;
     toc(tic_id)
     fprintf('Done LPLing queue on %d tiles.\n', length(bqueue.job_ids)) ;
-    job_statuses
-    successful_job_count = sum(job_statuses==1)
+    successful_job_count = sum(job_statuses==1)  %#ok<NOPTS>
 else
     % Useful for debugging
     pbo = progress_bar_object(tile_to_be_run_count) ;
