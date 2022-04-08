@@ -1,0 +1,4 @@
+[core]
+    remote = dm11
+['remote "dm11"']
+    url = /groups/mousebrainmicro/mousebrainmicro/dvc-data
