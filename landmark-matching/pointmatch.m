@@ -11,15 +11,21 @@ function pointmatch(central_tile_landmark_folder_path, ...
     % Front-end function to do z point-matching in the Patrick pipeline.
     
     % Deal with arguments
+    if ~exist('sample_metadata', 'var') || isempty(sample_metadata) ,
+        sample_metadata = [] ;  % only used when in debug mode
+    end
     if ~exist('manual_nominal_other_tile_ijk_offset', 'var') || isempty(manual_nominal_other_tile_ijk_offset) ,
-        manual_nominal_other_tile_ijk_offset = [] ;
+        manual_nominal_other_tile_ijk_offset = [] ;  % Means to just calculate the nominal offset
     end
     if ~exist('central_tile_ijk1', 'var') || isempty(central_tile_ijk1) ,
-        central_tile_ijk1 = [nan nan nan] ;
+        central_tile_ijk1 = [nan nan nan] ;  % only ever used for debugging, and currently not used at all
     end
     if ~exist('maximum_landmark_count', 'var') || isempty(maximum_landmark_count) ,
-        maximum_landmark_count = 1e3 ;
+        maximum_landmark_count = 1e4 ;
     end   
+    if do_run_in_debug_mode && isempty(sample_metadata) ,
+        error('sample_metadata must be nonempty in debug mode') ;
+    end
     
     % Read in stuff from input files
     central_tile_scope_struct = readScopeFile(central_tile_raw_folder_path) ;
