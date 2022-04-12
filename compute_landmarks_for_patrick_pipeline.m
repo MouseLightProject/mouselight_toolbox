@@ -8,6 +8,13 @@ function compute_landmarks_for_patrick_pipeline(p_map_root_path, landmarks_root_
         do_run_in_debug_mode = false ;
     end
     
+    % Out all the args to console, for debugging
+    p_map_root_path  %#ok<NOPRT>
+    landmarks_root_path  %#ok<NOPRT>
+    tile_relative_path  %#ok<NOPRT>
+    do_force_computation  %#ok<NOPRT>
+    do_run_in_debug_mode  %#ok<NOPRT>
+    
     % Make sure the output folder exists
     landmark_folder_path = fullfile(landmarks_root_path, tile_relative_path) ;
     ensure_folder_exists(landmark_folder_path) ;
@@ -15,7 +22,7 @@ function compute_landmarks_for_patrick_pipeline(p_map_root_path, landmarks_root_
     % Run for all channels
     channel_count = 2 ;
     for channel_index = 1 : channel_count ,
-        compute_landmarks_for_single_tile_channels(p_map_root_path, tile_relative_path, landmarks_root_path, ...
+        compute_landmarks_for_single_tile_channels(p_map_root_path, landmarks_root_path, tile_relative_path, ...
                                                    channel_index, ...
                                                    do_force_computation, do_run_in_debug_mode) ;
     end
