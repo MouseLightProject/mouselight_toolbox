@@ -23,6 +23,9 @@ function pointmatch(central_tile_landmark_folder_path, ...
     if ~exist('maximum_landmark_count', 'var') || isempty(maximum_landmark_count) ,
         maximum_landmark_count = 1e4 ;
     end   
+    if ~exist('do_run_in_debug_mode', 'var') || isempty(do_run_in_debug_mode) ,
+        do_run_in_debug_mode = false ;
+    end   
     if do_run_in_debug_mode && isempty(sample_metadata) ,
         error('sample_metadata must be nonempty in debug mode') ;
     end
