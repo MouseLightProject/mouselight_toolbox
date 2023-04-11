@@ -81,13 +81,14 @@ function relative_path_from_tile_index = fix_line_shift_in_place_for_sample(...
     %
 
     % Create the bqueue
+    do_try = [] ;
     max_running_slot_count = 800 ;
     bsub_option_string = '-P mouselight -J line-fix' ;
     slots_per_job = 2 ;
 
     if do_use_bqueue , 
         fprintf('Queuing line-fixing on %d tiles...\n', tile_to_be_run_count) ;
-        bqueue = bqueue_type(do_actually_submit, max_running_slot_count) ;
+        bqueue = bqueue_type(do_actually_submit, do_try, max_running_slot_count) ;
         pbo = progress_bar_object(tile_to_be_run_count) ;
         for tile_to_be_run_index = 1 : tile_to_be_run_count ,
             tile_relative_path = relative_path_from_tile_to_be_run_index{tile_to_be_run_index} ;

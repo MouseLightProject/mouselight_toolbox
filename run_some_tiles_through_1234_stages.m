@@ -73,7 +73,7 @@ tile_to_be_run_count = length(tile_index_from_tile_to_be_run_index)
 % Create the bqueue
 if do_use_bsub ,
     fprintf('Queueing LPL jobs for %d tiles...\n', tile_to_be_run_count) ;
-    bqueue = bqueue_type(do_actually_submit, max_running_slot_count) ;
+    bqueue = bqueue_type(do_actually_submit, [], max_running_slot_count) ;
     pbo = progress_bar_object(tile_to_be_run_count) ;
     for tile_to_be_run_index = 1 : tile_to_be_run_count ,
         tile_relative_path = relative_path_from_tile_to_be_run_index{tile_to_be_run_index} ;
@@ -143,7 +143,7 @@ stdouterr_file_path = fullfile(script_folder_path, 'mouselight-landmark-matching
 % Create the bqueue
 if do_use_bsub ,
     fprintf('Running landmark-matching (as single bsub job)...\n') ;
-    bqueue = bqueue_type(do_actually_submit, max_running_slot_count) ;
+    bqueue = bqueue_type(do_actually_submit, [], max_running_slot_count) ;
         bqueue.enqueue(slots_per_job, stdouterr_file_path, bsub_option_string, ...
             @landmark_match_all_tiles_in_z, ...
             raw_root_path, ...
