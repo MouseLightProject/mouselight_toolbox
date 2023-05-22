@@ -42,7 +42,7 @@ function find_and_verify(root_folder_path, does_need_verification_predicate, ver
             fprintf('  (%d more paths, %d total problematic paths)\n', problem_paths_count-paths_to_show_count, problem_paths_count) ;
         end
         fprintf('Boo!\n') ;
-        error('Verification with function %s() failed for some paths', func2str(verify_function)) ;
+        error('mouselight_toolbox:verification_failed', 'Verification with function %s() failed for some paths', func2str(verify_function)) ;
     end    
     elapsed_time = toc(tic_id) ;
     fprintf('Elapsed time for verifcation was %g seconds.\n', elapsed_time) ;
