@@ -9,4 +9,6 @@ parfor_progress.txt
 foreground-classifiers/data/
 foreground-classifiers/2021-03-17/
 RESTORED/
+freezing/octree*test*folder
+freezing/raw-tiles*test*folder
 
