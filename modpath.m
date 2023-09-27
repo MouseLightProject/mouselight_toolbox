@@ -8,6 +8,7 @@ function modpath()
     addpath(fullfile(this_folder_path,'rendering')) ;
     addpath(fullfile(this_folder_path,'check-tiles')) ;
     addpath(fullfile(this_folder_path,'line-fix')) ;
+    addpath(fullfile(this_folder_path,'freezing')) ;
     run(fullfile(this_folder_path, 'tmt', 'modpath.m')) ;  % add tmt stuff to path
     addpath(this_folder_path) ;
 end
