@@ -1,0 +1,453 @@
+MATLAB is selecting SOFTWARE OPENGL rendering.
+Using 8 thread(s) on compute node.
+
+sample_date =
+
+    '2022-02-01'
+
+
+analysis_tag =
+
+    'production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles'
+
+
+do_force_computations =
+
+  logical
+
+   0
+
+
+do_perform_field_correction =
+
+  logical
+
+   1
+
+
+do_run_in_debug_mode =
+
+  logical
+
+   0
+
+
+do_show_visualizations =
+
+  logical
+
+   1
+
+
+raw_tile_root_folder_path =
+
+    '/groups/mousebrainmicro/mousebrainmicro/data/2022-02-01/Tiling'
+
+
+landmark_root_folder_path =
+
+    '/nrs/mouselight/pipeline_output/2022-02-01/stage_3_descriptor_output'
+
+
+z_match_root_folder_path =
+
+    '/nrs/mouselight/pipeline_output/2022-02-01/stage_4_point_match_output'
+
+
+sample_memo_folder_path =
+
+    '/groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01'
+
+
+analysis_memo_folder_path =
+
+    '/groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles'
+
+
+stitching_output_folder_path =
+
+    '/groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output'
+
+Starting parallel pool (parpool) using the 'local' profile ...
+Connected to the parallel pool (number of workers: 8).
+Using 8 cores.
+Warning: Unknown field "brain_id" in sample metadata file
+Warning: Unknown field "genotype" in sample metadata file
+Warning: Unknown field "microscope" in sample metadata file
+
+mean_z_match_count =
+
+          270.925196602705
+
+
+median_z_match_count =
+
+   196
+
+
+min_z_match_count =
+
+     0
+
+
+max_z_match_count =
+
+        1805
+
+Done with stitching.
+
+tile_shape_ijk =
+
+        1024        1536         251
+
+
+spacing_um_xyz =
+
+         0.376073695014663         0.297296416938111                         1
+
+
+tile_lattice_shape =
+
+    29    18    58
+
+
+tile_count =
+
+       15895
+
+Warning: Unknown field "brain_id" in sample metadata file
+Warning: Unknown field "genotype" in sample metadata file
+Warning: Unknown field "microscope" in sample metadata file
+
+median_landmark_count =
+
+        3045
+
+
+pair_count =
+
+       15384
+
+
+max_z_match_count =
+
+        1805
+
+
+median_z_match_count =
+
+   211
+
+
+total_stage_z_match_sse =
+
+          1442815677.75026
+
+
+max_stage_z_match_rmse =
+
+            437.3991111989
+
+
+median_stage_z_match_rmse =
+
+          15.0996742846732
+
+[Warning: MATLAB has disabled some advanced graphics rendering features by
+switching to software OpenGL. For more information, click <a
+href="matlab:opengl('problems')">here</a>.] 
+Writing PDF file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/stage-z-match-rmse-montage.pdf:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 5035776 3535933 2248032 923590 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 5122088 3758047 2268232 933302 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 5370000 4009850 2268232 939225 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 5557312 4199785 2268232 945117 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5764824 4398413 2288432 954557 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5972336 4595427 2288432 960448 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 6159648 4792833 2308632 969822 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 6387360 5018827 2308632 975725 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6635272 5256394 2308632 981650 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6862984 5481853 2328832 991134 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 7090696 5714855 2328832 997065 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 7338608 5951087 2328832 1002973 2 done.
+Elapsed time: 2.6 sec
+Writing PNG file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/stage-z-match-rmse-montage.png:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 4407256 2909674 1862304 556048 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 4473368 3128356 1882504 565968 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 4741480 3383799 1882504 571891 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 4928792 3573630 1882504 577783 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5136304 3772258 1902704 587223 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5323616 3965840 1902704 593114 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 5531128 4166678 1922904 602488 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 5758840 4392672 1922904 608391 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6006752 4630239 1922904 614316 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6234464 4855698 1943104 623800 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 6462176 5088700 1943104 629731 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 6710088 5325036 1943104 635639 2 done.
+Elapsed time: 1.0 sec
+Writing PDF file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/stage-z-match-count-montage.pdf:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 5035776 3535934 2248032 923590 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 5122088 3758048 2268232 933302 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 5370000 4009851 2268232 939225 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 5557312 4199786 2268232 945117 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5764824 4398414 2288432 954557 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5972336 4595428 2288432 960448 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 6159648 4792834 2308632 969822 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 6387360 5018828 2308632 975725 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6635272 5256395 2308632 981650 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6862984 5481854 2328832 991134 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 7090696 5714856 2328832 997065 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 7338608 5951088 2328832 1002973 2 done.
+Elapsed time: 0.8 sec
+Writing PNG file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/stage-z-match-count-montage.png:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 4407256 2909675 1862304 556049 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 4473368 3128357 1882504 565969 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 4741480 3383800 1882504 571892 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 4928792 3573631 1882504 577784 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5136304 3772259 1902704 587224 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5323616 3965841 1902704 593115 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 5531128 4166679 1922904 602489 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 5758840 4392673 1922904 608392 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6006752 4630240 1922904 614317 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6234464 4855699 1943104 623801 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 6462176 5088701 1943104 629732 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 6710088 5325037 1943104 635640 2 done.
+Elapsed time: 0.9 sec
+Writing PDF file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/stage-z-match-rmse-scatter-plot.pdf:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 5035776 3535938 2248032 923590 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 5122088 3758052 2268232 933302 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 5370000 4009855 2268232 939225 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 5557312 4199790 2268232 945117 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5764824 4398418 2288432 954557 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5972336 4595432 2288432 960448 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 6159648 4792838 2308632 969822 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 6387360 5018832 2308632 975725 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6635272 5256399 2308632 981650 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6862984 5481858 2328832 991134 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 7090696 5714860 2328832 997065 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 7338608 5951092 2328832 1002973 2 done.
+Elapsed time: 1.0 sec
+Writing PNG file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/stage-z-match-rmse-scatter-plot.png:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 4407256 2909679 1862304 556053 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 4473368 3128361 1882504 565973 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 4741480 3383804 1882504 571896 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 4928792 3573635 1882504 577788 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5136304 3772263 1902704 587228 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5323616 3965845 1902704 593119 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 5531128 4166683 1922904 602493 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 5758840 4392677 1922904 608396 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6006752 4630244 1922904 614321 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6234464 4855703 1943104 623805 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 6462176 5088705 1943104 629736 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 6710088 5325041 1943104 635644 2 done.
+Elapsed time: 0.8 sec
+Time to compute barycentric landmark match errors: 201.483 sec
+Writing PDF file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/barycentric-z-match-rmse-montage.pdf:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 5035776 3535939 2248032 923590 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 5122088 3758053 2268232 933302 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 5370000 4009856 2268232 939225 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 5557312 4199791 2268232 945117 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5764824 4398419 2288432 954557 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5972336 4595433 2288432 960448 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 6159648 4792839 2308632 969822 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 6387360 5018833 2308632 975725 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6635272 5256400 2308632 981650 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6862984 5481859 2328832 991134 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 7090696 5714861 2328832 997065 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 7338608 5951093 2328832 1002973 2 done.
+Elapsed time: 0.8 sec
+Writing PNG file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/barycentric-z-match-rmse-montage.png:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 4407256 2909680 1862304 556054 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 4473368 3128362 1882504 565974 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 4741480 3383805 1882504 571897 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 4928792 3573636 1882504 577789 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5136304 3772264 1902704 587229 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5323616 3965846 1902704 593120 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 5531128 4166684 1922904 602494 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 5758840 4392678 1922904 608397 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6006752 4630245 1922904 614322 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6234464 4855704 1943104 623806 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 6462176 5088706 1943104 629737 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 6710088 5325042 1943104 635645 2 done.
+Elapsed time: 0.9 sec
+Writing PDF file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/barycentric-z-match-rmse-scatter-plot.pdf:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 5035776 3536008 2248032 923590 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 5122088 3758122 2268232 933302 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 5370000 4009925 2268232 939225 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 5557312 4199860 2268232 945117 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5764824 4398488 2288432 954557 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5972336 4595502 2288432 960448 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 6159648 4792908 2308632 969822 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 6387360 5018902 2308632 975725 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6635272 5256469 2308632 981650 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6862984 5481928 2328832 991134 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 7090696 5714930 2328832 997065 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 7338608 5951162 2328832 1002973 2 done.
+Elapsed time: 0.8 sec
+Writing PNG file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/barycentric-z-match-rmse-scatter-plot.png:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 4407256 2909757 1862304 556059 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 4473368 3128439 1882504 565979 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 4741480 3383882 1882504 571902 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 4928792 3573713 1882504 577794 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5136304 3772341 1902704 587234 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5323616 3965923 1902704 593125 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 5531128 4166761 1922904 602499 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 5758840 4392755 1922904 608402 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6006752 4630322 1922904 614327 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6234464 4855781 1943104 623811 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 6462176 5088783 1943104 629742 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 6710088 5325119 1943104 635650 2 done.
+Elapsed time: 0.8 sec
+
+barycentric_ssd_ratio =
+
+        0.0305707437847152
+
+Writing PDF file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/in-cpg-stage-z-match-rmse-montage.pdf:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 5035776 3535940 2248032 923590 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 5122088 3758054 2268232 933302 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 5370000 4009857 2268232 939225 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 5557312 4199792 2268232 945117 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5764824 4398420 2288432 954557 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5972336 4595434 2288432 960448 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 6159648 4792840 2308632 969822 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 6387360 5018834 2308632 975725 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6635272 5256401 2308632 981650 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6862984 5481860 2328832 991134 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 7090696 5714862 2328832 997065 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 7338608 5951094 2328832 1002973 2 done.
+Elapsed time: 0.7 sec
+Writing PNG file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/in-cpg-stage-z-match-rmse-montage.png:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 4407256 2909681 1862304 556055 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 4473368 3128363 1882504 565975 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 4741480 3383806 1882504 571898 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 4928792 3573637 1882504 577790 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5136304 3772265 1902704 587230 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5323616 3965847 1902704 593121 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 5531128 4166685 1922904 602495 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 5758840 4392679 1922904 608398 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6006752 4630246 1922904 614323 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6234464 4855705 1943104 623807 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 6462176 5088707 1943104 629738 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 6710088 5325043 1943104 635646 2 done.
+Elapsed time: 0.9 sec
+Writing PDF file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/in-cpg-stage-z-match-rmse-scatter-plot.pdf:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 5035776 3536009 2248032 923590 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 5122088 3758123 2268232 933302 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 5370000 4009926 2268232 939225 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 5557312 4199861 2268232 945117 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5764824 4398489 2288432 954557 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5972336 4595503 2288432 960448 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 6159648 4792909 2308632 969822 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 6387360 5018903 2308632 975725 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6635272 5256470 2308632 981650 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6862984 5481929 2328832 991134 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 7090696 5714931 2328832 997065 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 7338608 5951163 2328832 1002973 2 done.
+Elapsed time: 0.8 sec
+Writing PNG file /groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-no-fc-after-fixing-broken-tiles/stitching-output/in-cpg-stage-z-match-rmse-scatter-plot.png:
+gs: /misc/local/matlab-2019a/bin/glnxa64/libtiff.so.5: no version information available (required by /lib64/libgs.so.9)
+GPL Ghostscript 9.25 (2018-09-13)
+Copyright (C) 2018 Artifex Software, Inc.  All rights reserved.
+This software comes with NO WARRANTY: see the file PUBLIC for details.
+Loading NimbusMonoPS-Italic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Italic... 4407256 2909758 1862304 556060 2 done.
+Loading NimbusMonoPS-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-BoldItalic... 4473368 3128440 1882504 565980 2 done.
+Loading NimbusMonoPS-Bold font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Bold... 4741480 3383883 1882504 571903 2 done.
+Loading NimbusSans-Regular font from /usr/share/ghostscript/Resource/Font/NimbusSans-Regular... 4928792 3573714 1882504 577795 2 done.
+Loading NimbusSans-Italic font from /usr/share/ghostscript/Resource/Font/NimbusSans-Italic... 5136304 3772342 1902704 587235 2 done.
+Loading NimbusSans-Bold font from /usr/share/ghostscript/Resource/Font/NimbusSans-Bold... 5323616 3965924 1902704 593126 2 done.
+Loading NimbusSans-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusSans-BoldItalic... 5531128 4166762 1922904 602500 2 done.
+Loading NimbusRoman-Regular font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Regular... 5758840 4392756 1922904 608403 2 done.
+Loading NimbusRoman-Italic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Italic... 6006752 4630323 1922904 614328 2 done.
+Loading NimbusRoman-Bold font from /usr/share/ghostscript/Resource/Font/NimbusRoman-Bold... 6234464 4855782 1943104 623812 2 done.
+Loading NimbusRoman-BoldItalic font from /usr/share/ghostscript/Resource/Font/NimbusRoman-BoldItalic... 6462176 5088784 1943104 629743 2 done.
+Loading NimbusMonoPS-Regular font from /usr/share/ghostscript/Resource/Font/NimbusMonoPS-Regular... 6710088 5325120 1943104 635651 2 done.
+Elapsed time: 0.8 sec
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@h07u07>
+Subject: Job 118698198: </misc/local/matlab-2019a/bin/matlab -batch "modpath; stitch_2022_02_01_alt_with_fc_after_fixing_broken_tiles;"> in cluster <Janelia> Done
+
+Job </misc/local/matlab-2019a/bin/matlab -batch "modpath; stitch_2022_02_01_alt_with_fc_after_fixing_broken_tiles;"> was submitted from host <h07u01> by user <taylora> in cluster <Janelia> at Fri Feb 25 16:27:06 2022
+Job was executed on host(s) <8*h07u07>, in queue <local>, as user <taylora> in cluster <Janelia> at Fri Feb 25 16:27:06 2022
+</groups/scicompsoft/home/taylora> was used as the home directory.
+</groups/mousebrainmicro/mousebrainmicro/scripts/sample-2022-02-01> was used as the working directory.
+Started at Fri Feb 25 16:27:06 2022
+Terminated at Fri Feb 25 16:32:12 2022
+Results reported at Fri Feb 25 16:32:12 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/misc/local/matlab-2019a/bin/matlab -batch "modpath; stitch_2022_02_01_alt_with_fc_after_fixing_broken_tiles;"
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   376.00 sec.
+    Max Memory :                                 7850 MB
+    Average Memory :                             6407.23 MB
+    Total Requested Memory :                     122880.00 MB
+    Delta Memory :                               115030.00 MB
+    Max Swap :                                   -
+    Max Processes :                              22
+    Max Threads :                                677
+    Run time :                                   306 sec.
+    Turnaround time :                            306 sec.
+
+The output (if any) is above this job summary.
+

@@ -1,0 +1,36 @@
+>> cclf; check_tiles('2022-02-01', true)
+
+raw_tile_map_shape =
+
+    29    18    58
+
+Raw tile folder count: 15895
+Nominal tile shape (yxz) is: [1536 1024 251]
+Nominal raw tiff file size is: 789618398
+Nominal line-fix tiff file size is: 789618398
+
+Checking stage raw...
+[**************************************************]: 100.0%
+
+Problematic raw file count: 0
+
+Checking stage line-fix...
+[**************************************************]: 100.0%
+
+Problematic line-fix file count: 0
+
+Checking stage classifier...
+[**************************************************]: 100.0%
+
+Problematic classifier file count: 0
+
+Checking stage descriptor...
+[**************************************************]: 100.0%
+
+Problematic descriptor file count: 0
+
+Checking stage point-match...
+[**************************************************]: 100.0%
+
+Problematic point-match file count: 0
+>> 

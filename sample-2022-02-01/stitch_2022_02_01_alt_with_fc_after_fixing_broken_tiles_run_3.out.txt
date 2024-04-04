@@ -1,0 +1,159 @@
+MATLAB is selecting SOFTWARE OPENGL rendering.
+Using 8 thread(s) on compute node.
+
+sample_date =
+
+    '2022-02-01'
+
+
+analysis_tag =
+
+    'production-classifier-z-match-count-threshold-50-alt-with-fc-after-fixing-broken-tiles'
+
+
+do_force_computations =
+
+  logical
+
+   0
+
+
+do_perform_field_correction =
+
+  logical
+
+   1
+
+
+do_run_in_debug_mode =
+
+  logical
+
+   0
+
+
+do_show_visualizations =
+
+  logical
+
+   1
+
+
+raw_tile_root_folder_path =
+
+    '/groups/mousebrainmicro/mousebrainmicro/data/2022-02-01/Tiling'
+
+
+landmark_root_folder_path =
+
+    '/nrs/mouselight/pipeline_output/2022-02-01/stage_3_descriptor_output'
+
+
+z_match_root_folder_path =
+
+    '/nrs/mouselight/pipeline_output/2022-02-01/stage_4_point_match_output'
+
+
+sample_memo_folder_path =
+
+    '/groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01'
+
+
+analysis_memo_folder_path =
+
+    '/groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-with-fc-after-fixing-broken-tiles'
+
+
+stitching_output_folder_path =
+
+    '/groups/mousebrainmicro/mousebrainmicro/cluster/Reconstructions/2022-02-01/production-classifier-z-match-count-threshold-50-alt-with-fc-after-fixing-broken-tiles/stitching-output'
+
+Starting parallel pool (parpool) using the 'local' profile ...
+Connected to the parallel pool (number of workers: 8).
+Using 8 cores.
+Warning: Unknown field "brain_id" in sample metadata file
+Warning: Unknown field "genotype" in sample metadata file
+Warning: Unknown field "microscope" in sample metadata file
+
+mean_z_match_count =
+
+          270.925196602705
+
+
+median_z_match_count =
+
+   196
+
+
+min_z_match_count =
+
+     0
+
+
+max_z_match_count =
+
+        1805
+
+Running vectorField3D stage...
+Calculating vector fields...
+    Layer 1 of 57, tile k/z = 3
+[Warning: MATLAB has disabled some advanced graphics rendering features by
+switching to software OpenGL. For more information, click <a
+href="matlab:opengl('problems')">here</a>.] 
+    Layer with k/z = 3 total used matches: 26474
+{Undefined function or variable 'tile_shape_ijk'.
+
+Error in compute_targets_from_z_matches (line 117)
+                field_corrected_cpg_ij1s = util.fcshift(this_tile_curve_model,
+                order, tile_ij1s, tile_shape_ijk, cpg_ij1s) ;
+
+Error in vectorField3D (line 123)
+        compute_targets_from_z_matches(baseline_targets_from_tile_index, ...
+
+Error in stitch (line 216)
+        vecfield3D = vectorField3D(params, scopeloc, do_cold_stitch, regpts,
+        scopeparams, curvemodel) ;
+
+Error in stitch_and_compute_match_errors (line 34)
+    stitch(raw_tile_root_folder_path, ...
+
+Error in stitch_2022_02_01_alt_with_fc_after_fixing_broken_tiles (line 30)
+stitch_and_compute_match_errors(raw_tile_root_folder_path, ...
+} 
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@h07u15>
+Subject: Job 118839911: </misc/local/matlab-2019a/bin/matlab -batch "modpath; stitch_2022_02_01_alt_with_fc_after_fixing_broken_tiles;"> in cluster <Janelia> Exited
+
+Job </misc/local/matlab-2019a/bin/matlab -batch "modpath; stitch_2022_02_01_alt_with_fc_after_fixing_broken_tiles;"> was submitted from host <e05u16> by user <taylora> in cluster <Janelia> at Wed Mar  2 12:19:06 2022
+Job was executed on host(s) <8*h07u15>, in queue <local>, as user <taylora> in cluster <Janelia> at Wed Mar  2 12:19:06 2022
+</groups/scicompsoft/home/taylora> was used as the home directory.
+</groups/mousebrainmicro/mousebrainmicro/scripts/sample-2022-02-01> was used as the working directory.
+Started at Wed Mar  2 12:19:06 2022
+Terminated at Wed Mar  2 12:23:19 2022
+Results reported at Wed Mar  2 12:23:19 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/misc/local/matlab-2019a/bin/matlab -batch "modpath; stitch_2022_02_01_alt_with_fc_after_fixing_broken_tiles;"
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   1251.00 sec.
+    Max Memory :                                 6377 MB
+    Average Memory :                             4843.30 MB
+    Total Requested Memory :                     122880.00 MB
+    Delta Memory :                               116503.00 MB
+    Max Swap :                                   2 MB
+    Max Processes :                              28
+    Max Threads :                                1164
+    Run time :                                   251 sec.
+    Turnaround time :                            253 sec.
+
+The output (if any) is above this job summary.
+

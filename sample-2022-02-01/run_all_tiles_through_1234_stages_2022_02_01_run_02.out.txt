@@ -1,0 +1,40 @@
+Using 4 thread(s) on compute node.
+{Undefined function or variable 'run_all_tiles_through_1234_stages_2022_02_02'.
+} 
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@h07u19>
+Subject: Job 118692539: </misc/local/matlab-2019a/bin/matlab -nodisplay -batch "modpath; run_all_tiles_through_1234_stages_2022_02_02"> in cluster <Janelia> Exited
+
+Job </misc/local/matlab-2019a/bin/matlab -nodisplay -batch "modpath; run_all_tiles_through_1234_stages_2022_02_02"> was submitted from host <h07u01> by user <taylora> in cluster <Janelia> at Thu Feb 24 20:48:04 2022
+Job was executed on host(s) <4*h07u19>, in queue <local>, as user <taylora> in cluster <Janelia> at Thu Feb 24 20:48:04 2022
+</groups/scicompsoft/home/taylora> was used as the home directory.
+</groups/mousebrainmicro/mousebrainmicro/scripts/sample-2022-02-01> was used as the working directory.
+Started at Thu Feb 24 20:48:04 2022
+Terminated at Thu Feb 24 20:48:26 2022
+Results reported at Thu Feb 24 20:48:26 2022
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/misc/local/matlab-2019a/bin/matlab -nodisplay -batch "modpath; run_all_tiles_through_1234_stages_2022_02_02"
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   20.39 sec.
+    Max Memory :                                 897 MB
+    Average Memory :                             579.00 MB
+    Total Requested Memory :                     61440.00 MB
+    Delta Memory :                               60543.00 MB
+    Max Swap :                                   -
+    Max Processes :                              6
+    Max Threads :                                47
+    Run time :                                   20 sec.
+    Turnaround time :                            22 sec.
+
+The output (if any) is above this job summary.
+
